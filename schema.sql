@@ -1,16 +1,27 @@
-DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS oneTeam;
 
-CREATE DATABASE test;
 
-USE test;
+CREATE DATABASE IF NOT EXISTS oneTeam;
 
-CREATE TABLE items (
-  id int NOT NULL AUTO_INCREMENT,
-  quantity integer NOT NULL,
-  description varchar(50) NOT NULL,
-  PRIMARY KEY (ID)
-);
+USE oneTeam;
 
-/*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql
- *  to create the database and the tables.*/
+CREATE TABLE timeStamp (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  videoId INT NOT NULL,
+  studentId INT NOT NULL,
+  timeStamp varchar(55) NOT NULL
+)
+
+
+CREATE TABLE users (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name varchar(50) NOT NULL,
+  owner varchar(10) NOT NULL
+)
+
+
+CREATE TABLE video (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  url varchar(100) NOT NULL,
+  ownerId varchar(55) NOT NULL
+)
