@@ -14,13 +14,13 @@ CREATE TABLE timeStamp (
 
 
 CREATE TABLE users (
-  id INT NOT NULL AUTO_INCREMENT
+  id INT NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL,
   owner varchar(10) NOT NULL
 )
 
 
-CREATE TABLE video (
+CREATE TABLE videos (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   url varchar(100) NOT NULL,
   ownerId varchar(55) NOT NULL
