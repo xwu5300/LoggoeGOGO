@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS oneTeam;
 
 
-CREATE DATABASE IF NOT EXISTS oneTeam;
+CREATE DATABASE oneTeam;
 
 USE oneTeam;
 
@@ -14,7 +14,7 @@ CREATE TABLE timeStamp (
 
 
 CREATE TABLE users (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT
   name varchar(50) NOT NULL,
   owner varchar(10) NOT NULL
 )
