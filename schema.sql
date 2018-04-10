@@ -23,5 +23,14 @@ CREATE TABLE users (
 CREATE TABLE videos (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   url varchar(100) NOT NULL,
+  title varchar(100) NOT NULL,
+  description varchar(255),
+  image varchar(255),
   ownerId varchar(55) NOT NULL
 );
+
+INSERT INTO timeStamp (videoId, studentId, timeStamp) VALUES (1, 1, '01:30');
+
+INSERT INTO users (name, owner) VALUES ('Jun Yoo', 'Brian Fang');
+
+INSERT INTO videos (url, title, ownerId) VALUES ('https://www.youtube.com/watch?v=Cxy88GeEAxg', 'Minions', 1)
