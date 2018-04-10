@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Jun Yoo
+  - __Scrum Master__: Vanessa Wu
+  - __Development Team Members__: Brian Fang, Wayne Hong
 
 ## Table of Contents
 
