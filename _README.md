@@ -24,11 +24,11 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- React 15.4.2
+- jquery 3.1.1
+- MySQL 2.13.0
+- express 4.15.0
+- React-DOM 15.4.2
 
 ## Development
 
