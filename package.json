@@ -17,11 +17,15 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.0",
+    "fs": "0.0.1-security",
     "jquery": "^3.1.1",
     "mysql": "^2.13.0",
+    "net": "^1.0.2",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "tls": "0.0.1"
   }
 }
