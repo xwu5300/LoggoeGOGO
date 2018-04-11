@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp} = require('../database-mysql');
+const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp, selectAllUsers, insertStudent, insertOwner} = require('../database-mysql');
 const api = require('../config.js').API;
 const searchYouTube = require ('youtube-search-api-with-axios');
 const app = express();
@@ -33,7 +33,48 @@ app.post('/timestamps', function (req, res) {
   saveTimestamp(params, () => {res.status(201).send()});
 })
 
+
+// post username to db for login;
+app.post('/username/login', function (req, res) {
+  selectAllUsers(function(err, response) {
+    if (err) {
+    
+      res.send([]);
+    } else {
+    console.log('response', response)
+
+      res.status(201).send(response);
+    }
+  });
+});
+
+// post request for either student or owner username to db
+app.post('/username/register', (req, res) => {
+  if (req.body.student) {
+    insertStudent(req.body, function(err, response) {
+      if (err) {
+        console.log(err);
+      } else {
+          res.status(201).send(response)
+      }
+    })
+  } else {
+    insertOwner(req.body, function(err, response) {
+      if (err) {
+        console.log(err)
+      } else {
+        res.status(201).send(response);
+      }
+    })
+  }
+});
+
+
+
+
+
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
+
 
