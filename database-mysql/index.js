@@ -55,6 +55,45 @@ const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
 
 
 
+// selecting all users from database
+const selectAllUsers = (callback) => {
+    connection.query('SELECT * FROM users', function(err, results) {
+    if (err) throw err;
+    console.log('data', results)
+    callback(err, results)
+    });
+  } 
+  
+  
+  // inserting owner into database;
+  const insertOwner = (user, callback) => {
+    var queryString = `INSERT IGNORE INTO users (name, owner) VALUES (?, ?);`
+      console.log('user in server', user);
+      connection.query(queryString, [user.username, true], function(err, results) {
+        if (err) throw err;
+        callback(err, results);
+      });
+    }
+    
+  
+  // inserting student into database;
+  const insertStudent = (user, callback) => {
+    var queryString = `INSERT IGNORE INTO users (name, owner) VALUES (?, ?);`
+    console.log('user in server', user);
+    connection.query(queryString, [user.username, false], function(err, results) {
+      if (err) throw err;
+      callback(err, results);
+    });
+  }
+  
+  
+  
+  
+  
+exports.selectAllUsers = selectAllUsers;
+exports.insertStudent = insertStudent;
+exports.insertOwner = insertOwner;
+
 exports.retrieveTimestamp = retrieveTimestamp;
 exports.saveTimestamp = saveTimestamp;
 exports.saveVideo = saveVideo;
