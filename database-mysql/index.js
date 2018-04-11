@@ -6,14 +6,32 @@ var connection = mysql.createConnection({
   database : 'oneTeam'
 });
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM timeStamp', function(err, results, fields) {
+var retrieveTimestamp = function(callback) {
+  connection.query('SELECT * FROM timeStamp;', function(err, results, fields) {
     if(err) {
-      callback(err, null);
+      console.error(err);
     } else {
-      callback(null, results);
+      callback(results);
     }
   });
 };
 
-module.exports.selectAll = selectAll;
+
+var saveTimestamp = function({studentId, videoId, timestamp}, callback) {
+  connection.query(`INSERT INTO timeStamp (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
+    if(err) {
+      console.error(err);
+    } else {
+      console.log(studentId, videoId, timestamp)
+      callback();
+    }
+  });
+};
+
+
+
+exports.retrieveTimestamp = retrieveTimestamp;
+exports.saveTimestamp = saveTimestamp;
+
+
+

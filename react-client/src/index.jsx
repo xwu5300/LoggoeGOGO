@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import axios from 'axios';
+import VideoPlayer from './components/VideoPlayer.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -11,24 +13,29 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
-  }
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: '/items', 
+  //     success: (data) => {
+  //       this.setState({
+  //         items: data
+  //       })
+  //     },
+  //     error: (err) => {
+  //       console.log('err', err);
+  //     }
+  //   });
+  // }
+  
 
-  render () {
+
+
+
+  render () {    
     return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
+      {/* <h1>Item List</h1> */}
+      {/* <List items={this.state.items}/> */}
+      <VideoPlayer/>
     </div>)
   }
 }
