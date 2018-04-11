@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Search from './components/Search.jsx';
-import VideoList from './components/VideoList.jsx';
-// import VideoListEntry from './VideoListEntry.jsx';
+import Search from './Search.jsx';
+import VideoList from './VideoList.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
