@@ -1,35 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import List from './components/List.jsx';
+import Search from './components/Search.jsx';
+import VideoList from './components/VideoList.jsx';
+// import VideoListEntry from './VideoListEntry.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      items: []
+    this.state = {
+      videos: []
     }
+    this.getVideos = this.getVideos.bind(this);
+    this.showVideoList = this.showVideoList.bind(this);
   }
 
   componentDidMount() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    this.showVideoList();
+  }
+  
+  getVideos(query) {
+    axios.get('/owner/search', {params: {query: query}})
+         .then((data) => {
+           this.showVideoList();
+         })
   }
 
+  showVideoList() {
+    axios.get('/owner/videoList')
+         .then((data) => {
+           this.setState({
+             videos: data.data
+           })    
+         })
+  }
+
+
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-    </div>)
+    return (
+      <div id="owner-homepage-app">
+        <header className="navbar"><h1>Videos</h1></header>
+        <div className="main">
+          <Search getVideos={this.getVideos}/>
+          <VideoList videos={this.state.videos}/>
+        </div>  
+      </div>   
+    )
   }
 }
 
