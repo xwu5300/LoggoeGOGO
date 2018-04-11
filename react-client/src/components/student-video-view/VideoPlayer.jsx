@@ -7,7 +7,7 @@ class VideoPlayer extends React.Component {
     super(props)
 
     this.state = { 
-      videoId: 'Cxy88GeEAxg',
+      videoId: props.video || '8o5Cmfpeo6g',
       player: null,
       timestamps: [],
     };

@@ -6,10 +6,13 @@ const connection = mysql.createConnection({
   database : 'oneTeam'
 });
 
-const retrieveTimestamp = function(callback) {
-  connection.query('SELECT * FROM timeStamp;', function(err, results, fields) {
+const retrieveTimestamp = function(videoId, callback) {
+  console.log(videoId)
+  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
     if(err) {
       console.error(err);
+    } else {
+      callback(results);
     }
   })
 }
@@ -43,7 +46,7 @@ const selectAll = function(callback) {
 
 
 const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
-  connection.query(`INSERT INTO timeStamp (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
+  connection.query(`INSERT INTO timeStamps (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {

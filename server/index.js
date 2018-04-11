@@ -25,7 +25,8 @@ app.get('/owner/videoList', function(req, res) {
 
 
 app.get('/timestamps', function (req, res) {
-  retrieveTimestamp((data) => {res.send(data)});  
+  const videoId = req.query.videoId
+  retrieveTimestamp(videoId, (data) => {res.json(data)});  
 })
 
 app.post('/timestamps', function (req, res) {
