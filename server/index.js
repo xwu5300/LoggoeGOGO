@@ -8,21 +8,21 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/timestamps', function(req, res) {
+app.get('/timestamps', (req, res) => {
   selectTimestamp((err, data) => {
     if(err, null) console.error(err);
     if(null, data) res.send(data);
   })
 });
 
-app.get('/users', function(req, res) {
+app.get('/users', (req, res) => {
   selectAllUsers((err, data) => {
     if(err, null) console.error(err);
     if(null, data) res.send(data);
   })
 });
 
-app.get('/videos', function(req, res) {
+app.get('/videos', (req, res) => {
   selectAllVideos((err, data) => {
     if(err, null) console.error(err);
     if(null, data) res.send(data);
@@ -30,7 +30,5 @@ app.get('/videos', function(req, res) {
 });
 
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
-});
+app.listen(3000, () => console.log('listening on port 3000!'));
 
