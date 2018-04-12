@@ -1,5 +1,5 @@
 var path = require('path');
-var SRC_DIR = path.join(__dirname, '/react-client/src/components/student-video-view');
+var SRC_DIR = path.join(__dirname, '/react-client/src/');
 
 // var SRC_DIR = path.join(__dirname, '/react-client/src/components/owner-homepage-view');
 var DIST_DIR = path.join(__dirname, '/react-client/dist');

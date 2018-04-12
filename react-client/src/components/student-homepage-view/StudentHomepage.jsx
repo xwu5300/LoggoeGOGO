@@ -12,7 +12,7 @@ class StudentHomepage extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/videos').then((response) => this.setState({videoList: response.data})); 
+        axios.get('/student/homepage').then((response) => this.setState({videoList: response.data})); 
     }
 
     render() {

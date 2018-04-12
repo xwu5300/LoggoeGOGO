@@ -1,6 +1,14 @@
+const {saveVideo, 
+  saveUser, 
+  selectAll, 
+  retrieveTimestamp, 
+  saveTimestamp, 
+  deleteTimestamp, 
+  selectAllUsers, 
+  insertStudent, 
+  insertOwner} = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp, deleteTimestamp, selectAllUsers, insertStudent, insertOwner} = require('../database-mysql');
 const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
 
