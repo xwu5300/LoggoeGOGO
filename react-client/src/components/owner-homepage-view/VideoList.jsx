@@ -12,8 +12,6 @@ class VideoList extends React.Component {
         {this.props.videos.map((video) => (
           <div id="owner-homepage-video-list-entry" key={video.id}
               onClick={() => {
-                // this.props.updateDisplayVideo(video)
-                // this.props.showTimestamps(video.videoId)
                 this.props.redirect(video)
               }}
             >
