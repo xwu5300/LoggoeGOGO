@@ -5,46 +5,84 @@ import axios from 'axios';
 import VideoPlayer from './VideoPlayer.jsx'
 import TimestampList from './TimestampList.jsx'
 
+//props.videoId and props.studentId
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      timestamps: []
+      timestamps: [],
+      startingTimestamp: 0
     }
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
+    this.saveTimeStamp = this.saveTimeStamp.bind(this);
+    this.deleteTimestamp = this.deleteTimestamp.bind(this);
+    this.changeVideo = this.changeVideo.bind(this);
   }
 
-
-
   componentDidMount(){
-    const videoId = '8o5Cmfpeo6g';
+    const videoId = this.props.videoId || 'fju9ii8YsGs'
     this.getAllTimestamps(videoId);
   }
 
+  saveTimeStamp(timestamp) {
+    const user = this.props.studentId || 1
+    const videoId = this.props.videoId || 'fju9ii8YsGs'
+    //save to database
+    axios.post('/timestamps', {
+      params: {
+        studentId: user,
+        videoId: this.props.videoId || videoId,
+        timestamp: timestamp
+      }
+    })
+    .then(() => {this.getAllTimestamps()})
+  }
 
+  deleteTimestamp(timestamp) {
+    const user = this.props.studentId || 1;
+    const videoId = this.props.videoId || 'fju9ii8YsGs';
+    axios.delete('/timestamps', {
+      params: {
+        studentId: user,
+        videoId: this.props.videoId || videoId,
+        timestamp: timestamp
+      }
+    })
+    .then(() => {this.getAllTimestamps()})
+    .then(this.setState({startingTimestamp: this.state.timestamps[0]})) 
+  }
 
   //gets videoId as a prop
-  getAllTimestamps (videoId) {
+  getAllTimestamps() {
+    const videoId = this.props.videoId || 'fju9ii8YsGs'
     axios.get('/timestamps', {
       params: {
-        videoId: videoId
+        videoId: this.props.videoId || videoId
       }
     })
     .then((data) => (data.data.map((TS) => {return TS.timestamp})))
     .then((timestamps) => this.setState({timestamps: timestamps}))
-    .then(() => console.log(this.state.timestamps))
+  }
+
+  changeVideo(timestamp) {
+    this.setState({startingTimestamp: timestamp})
   }
 
 
-
-
-
-  render () {    
+  render() {    
+    const videoId = this.props.videoId || 'fju9ii8YsGs'
     return (<div>
-      {/* <h1>Item List</h1> */}
-      {/* <List items={this.state.items}/> */}
-      <VideoPlayer/>
+      <VideoPlayer 
+      videoId={videoId} 
+      startingTimestamp={this.state.startingTimestamp}
+      saveTimeStamp={this.saveTimeStamp}
+      />
+      <TimestampList 
+      timestamps={this.state.timestamps} 
+      deleteTimestamp={this.deleteTimestamp}
+      changeVideo={this.changeVideo}
+      />
     </div>)
   }
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp} = require('../database-mysql');
+const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp, deleteTimestamp} = require('../database-mysql');
 const api = require('../config.js').API;
 const searchYouTube = require ('youtube-search-api-with-axios');
 const app = express();
@@ -23,6 +23,7 @@ app.get('/owner/videoList', function(req, res) {
   })
 })
 
+//--------------------------WORKING WITH TIMESTAMPS
 
 app.get('/timestamps', function (req, res) {
   const videoId = req.query.videoId
@@ -31,8 +32,15 @@ app.get('/timestamps', function (req, res) {
 
 app.post('/timestamps', function (req, res) {
   let params = req.body.params;
-  saveTimestamp(params, () => {res.status(201).send()});
+  saveTimestamp(params, (success) => {res.status(201).send()});
 })
+
+app.delete('/timestamps', function (req, res) {
+  let params = req.query;
+  deleteTimestamp(params, (success) => {res.send()})
+})
+
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
