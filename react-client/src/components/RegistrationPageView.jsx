@@ -15,14 +15,15 @@ class Registration extends React.Component {
   redirectToStudentHomepage(user) {
     this.props.history.push({
       pathname: '/student',
-      user: user.username
+      username: user.username,
+
     })
   }
 
   redirectToOwnerHomepage(user) {
     this.props.history.push({
       pathname: '/owner',
-      user: user.username
+      username: user.username
     })
   }
 

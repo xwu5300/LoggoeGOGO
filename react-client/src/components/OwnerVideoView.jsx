@@ -15,6 +15,7 @@ class OwnerVideo extends React.Component {
 
   componentDidMount() {
     this.showTimestamps();
+    console.log('within the owner video view: ', this.props.location)
   }
 
   showTimestamps(videoId) {

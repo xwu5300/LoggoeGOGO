@@ -18,10 +18,10 @@ class StudentHomepage extends React.Component {
     }
 
     redirectToSelectedVideo(videoId) {
-        // console.log('video from videolist entry',videoId);
         this.props.history.push({
             pathname: '/student/video',
             videoId: videoId,
+            username: this.props.location.username
           })
     }
 

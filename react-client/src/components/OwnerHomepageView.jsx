@@ -40,7 +40,8 @@ class OwnerHomepage extends React.Component {
   redirectToSelectedVideo(video) {
     this.props.history.push({
         pathname: '/owner/video',
-        video: video
+        video: video,
+        username: this.props.location.username,
       })
 }
   render () {

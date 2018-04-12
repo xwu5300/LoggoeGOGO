@@ -38,17 +38,15 @@ class LandingPage extends React.Component {
           if (response.data[0].owner) {
             this.props.history.push({
               pathname: '/owner',
-              user: response.data[0].name
+              username: response.data[0].name,
             })
           } else {
             this.props.history.push({
               pathname: '/student',
-              user: response.data[0].name
+              username: response.data[0].name,
             })
           }
         }
-        // check if username exists in the user array;
-        //this.setState({exists: true}, () => console.log(this.state.exists))
       })
       .catch((err) => console.log('PROBLEMS: ', err))
   }
