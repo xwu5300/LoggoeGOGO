@@ -6,10 +6,12 @@ const connection = mysql.createConnection({
   database : 'oneTeam'
 });
 
-const retrieveTimestamp = function(callback) {
-  connection.query('SELECT * FROM timeStamp;', function(err, results, fields) {
+const retrieveTimestamp = function(videoId, callback) {
+  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
     if(err) {
       console.error(err);
+    } else {
+      callback(results);
     }
   })
 }
@@ -31,7 +33,7 @@ const saveVideo = (video, callback) => {
   })
 }
 
-const selectAll = function(callback) {
+const selectAllVideos = function(callback) {
   connection.query('SELECT * FROM videos', function(err, results) {
     if(err) {
       console.log('Did not get videos from database', err);
@@ -43,7 +45,7 @@ const selectAll = function(callback) {
 
 
 const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
-  connection.query(`INSERT INTO timeStamp (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
+  connection.query(`INSERT INTO timeStamps (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {
@@ -59,4 +61,4 @@ exports.retrieveTimestamp = retrieveTimestamp;
 exports.saveTimestamp = saveTimestamp;
 exports.saveVideo = saveVideo;
 exports.saveUser = saveUser;
-exports.selectAll = selectAll;
+exports.selectAllVideos = selectAllVideos;

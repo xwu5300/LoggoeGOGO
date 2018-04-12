@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp} = require('../database-mysql');
+const {saveVideo, saveUser, selectAllVideos, retrieveTimestamp, saveTimestamp} = require('../database-mysql');
 const api = require('../config.js').API;
 const searchYouTube = require ('youtube-search-api-with-axios');
 const app = express();
@@ -18,20 +18,26 @@ app.get('/owner/search', function (req, res) {
 });
 
 app.get('/owner/videoList', function(req, res) {
-  selectAll((videos) => {
+  selectAllVideos((videos) => {
     res.send(videos);
   })
 })
 
 
 app.get('/timestamps', function (req, res) {
-  retrieveTimestamp((data) => {res.send(data)});  
+  const videoId = req.query.videoId
+  retrieveTimestamp(videoId, (data) => {res.json(data)});  
 })
 
 app.post('/timestamps', function (req, res) {
   let params = req.body.params;
   saveTimestamp(params, () => {res.status(201).send()});
 })
+
+// app.post('/OwnerVideoView', function(req, res) {
+//   console.log('req from /OwnerVideoView to server', req.body);
+//   res.redirect('/OwnerVideoView', {query: req.body})
+// })
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
