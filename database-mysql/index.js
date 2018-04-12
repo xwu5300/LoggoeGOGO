@@ -6,6 +6,7 @@ const connection = mysql.createConnection({
   database : 'oneTeam'
 });
 
+
 const saveUser =(user) => {
 
 }
@@ -23,8 +24,8 @@ const saveVideo = (video, callback) => {
   })
 }
 
-//select all videos from database
-const selectAll = function(callback) {
+
+const selectAllVideos = function(callback) {
   connection.query('SELECT * FROM videos', function(err, results) {
     if(err) {
       console.log('Did not get videos from database', err);
@@ -113,5 +114,6 @@ exports.retrieveTimestamp = retrieveTimestamp;
 exports.saveTimestamp = saveTimestamp;
 exports.saveVideo = saveVideo;
 exports.saveUser = saveUser;
-exports.selectAll = selectAll;
+
 exports.deleteTimestamp = deleteTimestamp;
+exports.selectAllVideos = selectAllVideos;
