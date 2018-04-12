@@ -1,16 +1,11 @@
 const mysql = require('mysql');
-
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   database : 'oneTeam'
 });
-
-
 const saveUser =(user) => {
-
 }
-
 // add users later
 const saveVideo = (video, callback) => {
   const sql = "insert ignore into videos (videoId, title, description, image, ownerId) values (?, ?, ?, ?, ?);";
@@ -23,8 +18,6 @@ const saveVideo = (video, callback) => {
     }
   })
 }
-
-
 const selectAllVideos = function(callback) {
   connection.query('SELECT * FROM videos', function(err, results) {
     if(err) {
@@ -34,7 +27,6 @@ const selectAllVideos = function(callback) {
     }
   });
 };
-
 const retrieveTimestamp = function(videoId, callback) {
   connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
     if(err) {
@@ -44,10 +36,8 @@ const retrieveTimestamp = function(videoId, callback) {
     }
   })
 }
-
-
 const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
-  connection.query(`INSERT INTO timeStamps (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
+  connection.query(`INSERT INTO timeStamps (userId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {
@@ -56,9 +46,8 @@ const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
     }
   });
 };
-
 const deleteTimestamp = function({studentId, videoId, timestamp}, callback) {
-  connection.query(`DELETE FROM timeStamps WHERE studentId = ${studentId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`, function(err, results, fields) {
+  connection.query(`DELETE FROM timeStamps WHERE userId = ${studentId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`, function(err, results, fields) {
     if (err) {
       console.error(err);
     } else {
@@ -67,8 +56,6 @@ const deleteTimestamp = function({studentId, videoId, timestamp}, callback) {
     }
   })
 }
-
-
 // selecting all users from database
 const selectAllUsers = (user, callback) => {
     // console.log(user);
@@ -78,8 +65,6 @@ const selectAllUsers = (user, callback) => {
     callback(err, results)
     });
   } 
-
-
   
   
   // inserting owner into database;
@@ -114,6 +99,5 @@ exports.retrieveTimestamp = retrieveTimestamp;
 exports.saveTimestamp = saveTimestamp;
 exports.saveVideo = saveVideo;
 exports.saveUser = saveUser;
-
 exports.deleteTimestamp = deleteTimestamp;
 exports.selectAllVideos = selectAllVideos;

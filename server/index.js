@@ -44,7 +44,7 @@ app.post('/username/register', (req, res) => {
       if (err) {
         console.log(err);
       } else {
-          res.status(201).send(response)
+          res.status(201).send(response);
       }
     })
   } else {
