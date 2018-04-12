@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 class OwnerReg extends React.Component {
     constructor(props) {
@@ -49,10 +48,5 @@ class OwnerReg extends React.Component {
       )
     }
   }
-
-
-
-
-
-
+  
 export default OwnerReg;

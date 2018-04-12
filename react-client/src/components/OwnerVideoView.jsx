@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
-import OwnerVideoPlayer from './OwnerVideoPlayer.jsx';
-import OwnerTimeStamps from './OwnerTimeStamps.jsx';
-import Analytics from './Analytics.jsx';
+import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
+import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
+import Analytics from './owner-video-view/Analytics.jsx';
 
 
-class OwnerVideoView extends React.Component {
+class OwnerVideo extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,4 +24,4 @@ class OwnerVideoView extends React.Component {
   }
 }
 
-export default OwnerVideoView;
+export default OwnerVideo;

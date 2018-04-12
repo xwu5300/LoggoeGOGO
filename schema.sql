@@ -1,4 +1,3 @@
-//updated dummy data
 DROP DATABASE IF EXISTS oneTeam;
 CREATE DATABASE oneTeam;
 USE oneTeam;

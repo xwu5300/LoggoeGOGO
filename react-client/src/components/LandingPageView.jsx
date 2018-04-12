@@ -2,15 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-// console.log('webpack recompiling')
-
-
-class App extends React.Component {
+class LandingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: '',
-      exists: false
+      exists: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,11 +15,7 @@ class App extends React.Component {
 
 // getting the input value
   handleChange(e) {
-    this.setState({
-      value: e.target.value
-    }, () => {
-      console.log('input test', this.state.value)
-    })
+    this.setState({value: e.target.value}, () => console.log('input test', this.state.value))
   }
  // submitting the input value;
   handleSubmit() {
@@ -30,22 +23,14 @@ class App extends React.Component {
     // success;
     // sending user data; 
     axios.post('/username/login', user)
-    .then((response) => {
-      var users = response.data;
-      // check if username exists in the user array;
-      this.setState({
-        exists: true
-      }, () => {
-        console.log('exists'); // result of exists;
+      .then((response) => {
+        var users = response.data;
+        // check if username exists in the user array;
+        this.setState({exists: true}, () => console.log('exists'))
       })
-    })
-    .catch((err) => {
-      console.log('PROBLEMS: ', err);
-    })
+      .catch((err) => console.log('PROBLEMS: ', err))
   }
-
-
-
+  
   render () {
     return (
       <div>
@@ -56,10 +41,11 @@ class App extends React.Component {
           </label>
 
            <button onClick={this.handleSubmit}>Submit</button>
-           <button >Register</button> 
+           <button>Register</button> 
     </div>
     )
   }
+
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default LandingPage;

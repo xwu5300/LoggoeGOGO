@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Search from './owner-homepage-view/Search.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
-import OwnerVideoView from './owner-video-view/OwnerVideoView.jsx';
+import OwnerVideo from './OwnerVideoView.jsx';
 
-class App extends React.Component {
+class OwnerHomepage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,7 +64,7 @@ class App extends React.Component {
             updateDisplayVideo={this.updateDisplayVideo}
             showTimestamps = {this.showTimestamps}
           />
-          <OwnerVideoView 
+          <OwnerVideo 
             video={this.state.video}
             timeStamps={this.state.timeStamps}
           />
@@ -75,7 +74,4 @@ class App extends React.Component {
   }
 }
 
-
-
-
-ReactDOM.render(<App />, document.getElementById('app'));
+export default OwnerHomepage;

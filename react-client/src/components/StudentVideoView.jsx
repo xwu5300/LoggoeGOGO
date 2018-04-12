@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import VideoPlayer from './VideoPlayer.jsx'
-import TimestampList from './TimestampList.jsx'
+import VideoPlayer from './student-video-view/VideoPlayer.jsx'
+import TimestampList from './student-video-view/TimestampList.jsx'
 
 //props.videoId and props.studentId
 
-class App extends React.Component {
+class StudentVideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -87,4 +87,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default StudentVideo;
