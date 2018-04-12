@@ -31,8 +31,7 @@ app.post('/username/login', function (req, res) {
       console.log(err);
       res.send();
     } else {
-      console.log('response', req.body)
-      res.status(201).send();
+      res.status(201).send(response);
     }
   });
 });

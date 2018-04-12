@@ -26,7 +26,8 @@ class OwnerReg extends React.Component {
         // console.log('here')
         axios.post('/username/register', user)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
+          this.props.redirect(user);
         })
         .catch((err) => {
           console.log('error in client side', err);

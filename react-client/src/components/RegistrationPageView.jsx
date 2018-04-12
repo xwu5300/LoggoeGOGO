@@ -1,27 +1,40 @@
 import React from 'react';
 import StudentReg from './registration-page-view/StudentReg.jsx';
 import OwnerReg from './registration-page-view/OwnerReg.jsx';
+import {withRouter} from 'react-router-dom';
 
 
 
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      registerClicked: ''
-    }
+    this.redirectToStudentHomepage = this.redirectToStudentHomepage.bind(this);
+    this.redirectToOwnerHomepage = this.redirectToOwnerHomepage.bind(this);
   }
 
+  redirectToStudentHomepage(user) {
+    this.props.history.push({
+      pathname: '/student',
+      user: user.username
+    })
+  }
+
+  redirectToOwnerHomepage(user) {
+    this.props.history.push({
+      pathname: '/owner',
+      user: user.username
+    })
+  }
 
   render () {
     return (
     <div>
           <h1>REGISTRATIONS</h1>
-          <OwnerReg />
-          <StudentReg />
+          <StudentReg redirect={this.redirectToStudentHomepage}/>
+          <OwnerReg redirect={this.redirectToOwnerHomepage}/>
     </div>
     )
   }
 }
 
-export default Registration;
+export default withRouter(Registration);

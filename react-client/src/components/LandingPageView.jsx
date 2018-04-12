@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 class LandingPage extends React.Component {
   constructor(props) {
@@ -11,24 +12,51 @@ class LandingPage extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
 // getting the input value
   handleChange(e) {
-    this.setState({value: e.target.value}, () => console.log('input test', this.state.value))
+    this.setState({value: e.target.value})
   }
+
+
  // submitting the input value;
   handleSubmit() {
     var user = {username: this.state.value}
-    // success;
+
     // sending user data; 
     axios.post('/username/login', user)
       .then((response) => {
-        var users = response.data;
+
+        if (!response.data.length) {
+          this.setState({
+            value: ''
+          })
+          window.alert('username does not exist');
+        } else {
+          if (response.data[0].owner) {
+            this.props.history.push({
+              pathname: '/owner',
+              user: response.data[0].name
+            })
+          } else {
+            this.props.history.push({
+              pathname: '/student',
+              user: response.data[0].name
+            })
+          }
+        }
         // check if username exists in the user array;
-        this.setState({exists: true}, () => console.log('exists'))
+        //this.setState({exists: true}, () => console.log(this.state.exists))
       })
       .catch((err) => console.log('PROBLEMS: ', err))
+  }
+
+  handleRegister() {
+    this.props.history.push({
+      pathname: '/registration'
+    })
   }
   
   render () {
@@ -41,11 +69,11 @@ class LandingPage extends React.Component {
           </label>
 
            <button onClick={this.handleSubmit}>Submit</button>
-           <button>Register</button> 
+           <button onClick={this.handleRegister}>Register</button> 
     </div>
     )
   }
 
 }
 
-export default LandingPage;
+export default withRouter(LandingPage);

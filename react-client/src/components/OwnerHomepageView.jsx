@@ -3,31 +3,24 @@ import axios from 'axios';
 import Search from './owner-homepage-view/Search.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import OwnerVideo from './OwnerVideoView.jsx';
+import {withRouter} from 'react-router-dom';
 
 class OwnerHomepage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       videos: [],
-      video: '',
-      timeStamps: []
+      video: ''
     }
     this.getVideos = this.getVideos.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
-    this.updateDisplayVideo = this.updateDisplayVideo.bind(this);
-    this.showTimestamps = this.showTimestamps.bind(this);
+    this.redirectToSelectedVideo = this.redirectToSelectedVideo.bind(this);
   }
 
   componentDidMount() {
     this.showVideoList();
   }
   
-  updateDisplayVideo(video) {
-    this.setState({
-      video: video
-    })
-  }
-
   getVideos(query) {
     axios.get('/owner/search', {params: {query: query}})
          .then((data) => {
@@ -44,29 +37,21 @@ class OwnerHomepage extends React.Component {
          })
   }
 
-  showTimestamps(videoId) {
-    axios.get('/timestamps', {params: {videoId: videoId}})
-         .then((data) => {
-           this.setState({
-             timeStamps: data.data
-           })
-         })
-  }
-
+  redirectToSelectedVideo(video) {
+    this.props.history.push({
+        pathname: '/owner/video',
+        video: video
+      })
+}
   render () {
     return (
       <div id="owner-homepage-app">
-        <header className="navbar"><h1>Videos</h1></header>
+        <header className="navbar"><h1>Owner Videos</h1></header>
         <div className="main">
           <Search getVideos={this.getVideos}/>
           <VideoList 
             videos={this.state.videos} 
-            updateDisplayVideo={this.updateDisplayVideo}
-            showTimestamps = {this.showTimestamps}
-          />
-          <OwnerVideo 
-            video={this.state.video}
-            timeStamps={this.state.timeStamps}
+            redirect={this.redirectToSelectedVideo}
           />
         </div>  
       </div>   
@@ -74,4 +59,4 @@ class OwnerHomepage extends React.Component {
   }
 }
 
-export default OwnerHomepage;
+export default withRouter(OwnerHomepage);
