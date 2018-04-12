@@ -9,7 +9,9 @@ const {
   insertStudent, 
   insertOwner,
   retrieveUserId,
-  selectOwnerVideos
+  selectOwnerVideos,
+  selectCurrentVideo,
+  retrieveOwnerTimestamp
 } = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -18,6 +20,8 @@ const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
 
 const app = express();
+const axios = require('axios');
+const moment = require('moment');
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.json());
@@ -65,7 +69,6 @@ app.post('/username/register', (req, res) => {
 app.get('/users', (req, res) => {
   retrieveUserId(req.query.user, (userId) => {
     res.send(userId);
-    console.log('get userid in server', userId)
   })
 })
 
@@ -79,7 +82,16 @@ app.get('/student/homepage', (req, res) => selectAllVideos((videos) => res.send(
 app.get('/owner/search', (req, res) => {
   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
     (video) => {
-      saveVideo(video[0], req.query.userId, () => res.send(video[0]))
+      axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`)
+      .then((data) => {
+        var duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+        saveVideo(video[0], req.query.userId, duration, () => {
+          selectCurrentVideo(video[0].id.videoId, (video) => {
+            // console.log('selectCurrentVideo in server', video[0])
+            res.send(video[0])
+          })
+        })
+      });
     });
 });
 
@@ -95,7 +107,12 @@ app.get('/owner/videoList', function(req, res) {
 
 app.get('/timestamps', function (req, res) {
   const videoId = req.query.videoId
-  retrieveTimestamp(videoId, (data) => {res.json(data)});  
+  retrieveTimestamp(videoId, req.query.userId, (data) => {res.json(data)});  
+})
+
+app.get('/ownertimestamps', function (req, res) {
+  const videoId = req.query.videoId
+  retrieveOwnerTimestamp(videoId, (data) => {res.send(data)});  
 })
 
 app.post('/timestamps', function (req, res) {
@@ -114,4 +131,3 @@ app.delete('/timestamps', function (req, res) {
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
-

@@ -7,9 +7,9 @@ const connection = mysql.createConnection({
 const saveUser =(user) => {
 }
 // add users later
-const saveVideo = (video, userId, callback) => {
-  const sql = "insert ignore into videos (videoId, title, description, image, userId) values (?, ?, ?, ?, ?);";
-  const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId];
+const saveVideo = (video, userId, duration, callback) => {
+  const sql = "insert ignore into videos (videoId, title, description, image, userId, duration) values (?, ?, ?, ?, ?, ?);";
+  const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId, duration];
   connection.query(sql, values, (err, result) => {
     if (err) {
       console.log('Video is not saved', err)
@@ -27,7 +27,15 @@ const selectAllVideos = function(callback) {
     }
   });
 };
-
+const selectCurrentVideo = function(videoId, callback) {
+  connection.query(`SELECT * FROM videos WHERE videoId='${videoId}'`, function(err, result) {
+    if(err) {
+      console.log('err', err)
+    } else {
+      callback(result);
+    }
+  })
+}
 const selectOwnerVideos = function(userId, callback) {
   connection.query(`SELECT * FROM videos WHERE userId='${userId}'`, function(err, results) {
     if(err) {
@@ -38,8 +46,8 @@ const selectOwnerVideos = function(userId, callback) {
   });
 };
 
-const retrieveTimestamp = function(videoId, callback) {
-  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
+const retrieveTimestamp = function(videoId, userId, callback) {
+  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {
@@ -47,7 +55,15 @@ const retrieveTimestamp = function(videoId, callback) {
     }
   })
 }
-
+const retrieveOwnerTimestamp = function(videoId, callback) {
+  connection.query(`SELECT timestamp, userId FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
+    if(err) {
+      console.error(err);
+    } else {
+      callback(results);
+    }
+  })
+}
 const saveTimestamp = function({userId, videoId, timestamp}, callback) {
   connection.query(`INSERT INTO timeStamps (userId, videoId, timeStamp) VALUES (${userId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
@@ -127,3 +143,5 @@ exports.deleteTimestamp = deleteTimestamp;
 exports.selectAllVideos = selectAllVideos;
 exports.retrieveUserId = retrieveUserId;
 exports.selectOwnerVideos = selectOwnerVideos;
+exports.selectCurrentVideo = selectCurrentVideo;
+exports.retrieveOwnerTimestamp = retrieveOwnerTimestamp;
