@@ -46,8 +46,8 @@ const selectOwnerVideos = function(userId, callback) {
   });
 };
 
-const retrieveTimestamp = function(videoId, callback) {
-  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
+const retrieveTimestamp = function(videoId, userId, callback) {
+  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {
@@ -55,7 +55,15 @@ const retrieveTimestamp = function(videoId, callback) {
     }
   })
 }
-
+const retrieveOwnerTimestamp = function(videoId, callback) {
+  connection.query(`SELECT timestamp, userId FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
+    if(err) {
+      console.error(err);
+    } else {
+      callback(results);
+    }
+  })
+}
 const saveTimestamp = function({userId, videoId, timestamp}, callback) {
   connection.query(`INSERT INTO timeStamps (userId, videoId, timeStamp) VALUES (${userId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
@@ -136,3 +144,4 @@ exports.selectAllVideos = selectAllVideos;
 exports.retrieveUserId = retrieveUserId;
 exports.selectOwnerVideos = selectOwnerVideos;
 exports.selectCurrentVideo = selectCurrentVideo;
+exports.retrieveOwnerTimestamp = retrieveOwnerTimestamp;

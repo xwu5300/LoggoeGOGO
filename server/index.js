@@ -10,7 +10,8 @@ const {
   insertOwner,
   retrieveUserId,
   selectOwnerVideos,
-  selectCurrentVideo
+  selectCurrentVideo,
+  retrieveOwnerTimestamp
 } = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -106,7 +107,12 @@ app.get('/owner/videoList', function(req, res) {
 
 app.get('/timestamps', function (req, res) {
   const videoId = req.query.videoId
-  retrieveTimestamp(videoId, (data) => {res.json(data)});  
+  retrieveTimestamp(videoId, req.query.userId, (data) => {res.json(data)});  
+})
+
+app.get('/ownertimestamps', function (req, res) {
+  const videoId = req.query.videoId
+  retrieveOwnerTimestamp(videoId, (data) => {res.send(data)});  
 })
 
 app.post('/timestamps', function (req, res) {

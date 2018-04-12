@@ -58,12 +58,10 @@ class OwnerHomepage extends React.Component {
     this.props.history.push({
         pathname: '/owner/video',
         video: video,
-        username: this.props.location.username
+        userId: this.state.userId
       })
 }
   render () {
-    console.log('this.state videos', this.state.videos)
-    // console.log('userId in this.stats owner home page', this.state.userId)
     return (
       <div id="owner-homepage-app">
         <header className="navbar"><h1>Owner Videos</h1></header>
