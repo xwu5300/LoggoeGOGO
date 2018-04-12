@@ -6,14 +6,6 @@ const connection = mysql.createConnection({
   database : 'oneTeam'
 });
 
-const retrieveTimestamp = function(callback) {
-  connection.query('SELECT * FROM timeStamp;', function(err, results, fields) {
-    if(err) {
-      console.error(err);
-    }
-  })
-}
-
 const saveUser =(user) => {
 
 }
@@ -41,18 +33,38 @@ const selectAll = function(callback) {
   });
 };
 
+const retrieveTimestamp = function(videoId, callback) {
+  connection.query(`SELECT timestamp FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`, function(err, results, fields) {
+    if(err) {
+      console.error(err);
+    } else {
+      callback(results);
+    }
+  })
+}
+
 
 const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
-  connection.query(`INSERT INTO timeStamp (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
+  connection.query(`INSERT INTO timeStamps (studentId, videoId, timeStamp) VALUES (${studentId}, '${videoId}', ${timestamp});`, function(err, results, fields) {
     if(err) {
       console.error(err);
     } else {
       console.log(studentId, videoId, timestamp)
-      callback();
+      callback(results);
     }
   });
 };
 
+const deleteTimestamp = function({studentId, videoId, timestamp}, callback) {
+  connection.query(`DELETE FROM timeStamps WHERE studentId = ${studentId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`, function(err, results, fields) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(studentId, videoId, timestamp)
+      callback(results);
+    }
+  })
+}
 
 
 // selecting all users from database
@@ -94,9 +106,9 @@ const selectAllUsers = (user, callback) => {
 exports.selectAllUsers = selectAllUsers;
 exports.insertStudent = insertStudent;
 exports.insertOwner = insertOwner;
-
 exports.retrieveTimestamp = retrieveTimestamp;
 exports.saveTimestamp = saveTimestamp;
 exports.saveVideo = saveVideo;
 exports.saveUser = saveUser;
 exports.selectAll = selectAll;
+exports.deleteTimestamp = deleteTimestamp;

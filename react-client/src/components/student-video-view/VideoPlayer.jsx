@@ -7,14 +7,12 @@ class VideoPlayer extends React.Component {
     super(props)
 
     this.state = { 
-      videoId: 'Cxy88GeEAxg',
-      player: null,
-      timestamps: [],
+      videoId: this.props.videoId,
+      player: null
     };
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
-    // this.onChangeVideo = this.onChangeVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
   }
 
@@ -33,30 +31,10 @@ class VideoPlayer extends React.Component {
     this.state.player.pauseVideo();
   }
 
-  
-  // onChangeVideo() {
-  //   this.setState({
-  //     videoId: this.state.videoId === videoIdA ? videoIdB : videoIdA,
-  //   });
-  // }
-
-  // showTimestamps() {
-  //   axois 
-  // }
 
   saveTimeStamp() {
-    const user = this.props.studentId || 1
-    let timestamp = Math.floor(this.state.player.getCurrentTime());
-    //save to database
-    axios.post('/timestamps', {
-      params: {
-        studentId: user,
-        videoId: this.state.videoId,
-        timestamp: timestamp
-      }
-    })
-    .then(()=>{})
-    //run gettimestamp to update the state
+    const timestamp = Math.floor(this.state.player.getCurrentTime());
+    this.props.saveTimeStamp(timestamp);
   }
 
   render() {
@@ -64,9 +42,8 @@ class VideoPlayer extends React.Component {
       height: '390',
       width: '640',
       playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0,
-        // start: 25,
-        // end: 35
+        autoplay: 1,
+        start: this.props.startingTimestamp,
       }
     };
 

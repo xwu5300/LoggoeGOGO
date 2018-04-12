@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp, selectAllUsers, insertStudent, insertOwner} = require('../database-mysql');
+const {saveVideo, saveUser, selectAll, retrieveTimestamp, saveTimestamp, deleteTimestamp, selectAllUsers, insertStudent, insertOwner} = require('../database-mysql');
 const api = require('../config.js').API;
 const searchYouTube = require ('youtube-search-api-with-axios');
 const app = express();
@@ -23,14 +23,21 @@ app.get('/owner/videoList', function(req, res) {
   })
 })
 
+//--------------------------WORKING WITH TIMESTAMPS
 
 app.get('/timestamps', function (req, res) {
-  retrieveTimestamp((data) => {res.send(data)});  
+  const videoId = req.query.videoId
+  retrieveTimestamp(videoId, (data) => {res.json(data)});  
 })
 
 app.post('/timestamps', function (req, res) {
   let params = req.body.params;
-  saveTimestamp(params, () => {res.status(201).send()});
+  saveTimestamp(params, (success) => {res.status(201).send()});
+})
+
+app.delete('/timestamps', function (req, res) {
+  let params = req.query;
+  deleteTimestamp(params, (success) => {res.send()})
 })
 
 
