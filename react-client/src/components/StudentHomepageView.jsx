@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoList from './VideoListView.jsx';
+import VideoList from './student-homepage-view/VideoListView.jsx';
 import axios from 'axios';
 
 class StudentHomepage extends React.Component {

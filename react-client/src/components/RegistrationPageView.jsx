@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-// import $ from 'jquery';
-import StudentReg from './StudentReg.jsx';
-import OwnerReg from './OwnerReg.jsx';
+import StudentReg from './registration-page-view/StudentReg.jsx';
+import OwnerReg from './registration-page-view/OwnerReg.jsx';
 
 
 
@@ -13,8 +11,6 @@ class Registration extends React.Component {
       registerClicked: ''
     }
   }
-
-
 
 
   render () {
@@ -28,4 +24,4 @@ class Registration extends React.Component {
   }
 }
 
-ReactDOM.render(<Registration />, document.getElementById('app'));
+export default Registration;

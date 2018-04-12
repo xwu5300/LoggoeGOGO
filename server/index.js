@@ -1,4 +1,5 @@
-const {saveVideo, 
+const {
+  saveVideo, 
   saveUser, 
   selectAllVideos, 
   retrieveTimestamp, 
@@ -6,7 +7,8 @@ const {saveVideo,
   deleteTimestamp, 
   selectAllUsers, 
   insertStudent, 
-  insertOwner} = require('../database-mysql');
+  insertOwner
+} = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -26,7 +28,7 @@ app.post('/username/login', function (req, res) {
     // console.log(req.body.username);
   selectAllUsers(req.body.username, function(err, response) {
     if (err) {
-        console.log(err);
+      console.log(err);
       res.send();
     } else {
       console.log('response', req.body)
@@ -34,7 +36,6 @@ app.post('/username/login', function (req, res) {
     }
   });
 });
-
 
 //---------------------------------------------------------USER REGISTRATION
 // post request for either student or owner username to db
@@ -57,7 +58,6 @@ app.post('/username/register', (req, res) => {
     })
   }
 });
-
 
 //---------------------------------------------------------STUDENT USER REQUESTS
 //get all videos for student homepage
