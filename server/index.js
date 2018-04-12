@@ -7,7 +7,9 @@ const {
   deleteTimestamp, 
   selectAllUsers, 
   insertStudent, 
-  insertOwner
+  insertOwner,
+  retrieveUserId,
+  selectOwnerVideos
 } = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -58,6 +60,16 @@ app.post('/username/register', (req, res) => {
   }
 });
 
+//---------------------------------------------------------USER ID
+//get userId for owner homepage and student homepage
+app.get('/users', (req, res) => {
+  retrieveUserId(req.query.user, (userId) => {
+    res.send(userId);
+    console.log('get userid in server', userId)
+  })
+})
+
+
 //---------------------------------------------------------STUDENT USER REQUESTS
 //get all videos for student homepage
 app.get('/student/homepage', (req, res) => selectAllVideos((videos) => res.send(videos)));
@@ -66,13 +78,15 @@ app.get('/student/homepage', (req, res) => selectAllVideos((videos) => res.send(
 
 app.get('/owner/search', (req, res) => {
   searchYouTube({key: api, q: req.query.query, order: "viewCount", maxResults: 1}, 
-    (video) => saveVideo(video[0], () => res.send(video[0])));
+    (video) => {
+      saveVideo(video[0], req.query.userId, () => res.send(video[0]))
+    });
 });
 
-//get all videos for owner
+//get all videos for owner.
 
 app.get('/owner/videoList', function(req, res) {
-  selectAllVideos((videos) => {
+  selectOwnerVideos(req.query.userId, (videos) => {
     res.send(videos);
   })
 })

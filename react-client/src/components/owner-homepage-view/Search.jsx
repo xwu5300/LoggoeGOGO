@@ -24,7 +24,7 @@ class Search extends React.Component {
         />
         <button value="search" 
           onClick={() => this.props.getVideos(this.state.userInput)}
-        > Click Here
+        > Search
         </button>
       </div>
     )
