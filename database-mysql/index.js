@@ -56,8 +56,9 @@ const saveTimestamp = function({studentId, videoId, timestamp}, callback) {
 
 
 // selecting all users from database
-const selectAllUsers = (callback) => {
-    connection.query('SELECT * FROM users', function(err, results) {
+const selectAllUsers = (user, callback) => {
+    // console.log(user);
+    connection.query(`SELECT * FROM users where name = "${user}"`, function(err, results) {
     if (err) throw err;
     console.log('data', results)
     callback(err, results)

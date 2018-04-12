@@ -9,7 +9,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      exists: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,18 +33,14 @@ class App extends React.Component {
     .then((response) => {
       var users = response.data;
       // check if username exists in the user array;
-      users.forEach((username) => {
-        if ( username.name === user.username) {
-            console.log(username, this.state.value)
-  //////// NEED REDIRECT TO STUDENT VIEW!/////////
-          console.log('user is valid')
-        } else {
-          alert('user is not valid')
-        }
+      this.setState({
+        exists: true
+      }, () => {
+        console.log('exists'); // result of exists;
       })
     })
     .catch((err) => {
-      console.log('PROBLEMS: ' , err);
+      console.log('PROBLEMS: ', err);
     })
   }
 
