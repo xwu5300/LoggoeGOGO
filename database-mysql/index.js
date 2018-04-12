@@ -23,6 +23,7 @@ const saveVideo = (video, callback) => {
   })
 }
 
+//select all videos from database
 const selectAll = function(callback) {
   connection.query('SELECT * FROM videos', function(err, results) {
     if(err) {
@@ -76,6 +77,8 @@ const selectAllUsers = (user, callback) => {
     callback(err, results)
     });
   } 
+
+
   
   
   // inserting owner into database;
