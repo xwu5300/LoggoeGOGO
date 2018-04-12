@@ -20,13 +20,17 @@ class OwnerHomepage extends React.Component {
   }
 
   componentDidMount() {
+    console.log('test me');
     this.getUserId(this.props.location.username)
+    console.log(this.props.location.username)
   }
   
   getVideos(query) {
     axios.get('/owner/search', {params: {query: query, userId: this.state.userId}})
          .then((data) => {
-           this.showVideoList(this.state.userId);
+           this.setState({
+             videos: [...this.state.videos, data.data]
+           })
          })
   }
 
@@ -43,6 +47,7 @@ class OwnerHomepage extends React.Component {
   showVideoList(userId) {
     axios.get('/owner/videoList', {params: {userId: userId}})
          .then((data) => {
+           console.log('format from database', data.data)
            this.setState({
              videos: data.data
            })
@@ -53,11 +58,10 @@ class OwnerHomepage extends React.Component {
     this.props.history.push({
         pathname: '/owner/video',
         video: video,
-        username: this.props.location.username
+        userId: this.state.userId
       })
 }
   render () {
-    // console.log('userId in this.stats owner home page', this.state.userId)
     return (
       <div id="owner-homepage-app">
         <header className="navbar"><h1>Owner Videos</h1></header>

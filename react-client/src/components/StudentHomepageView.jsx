@@ -8,7 +8,7 @@ class StudentHomepage extends React.Component {
         super(props);
         this.state = {
             query: '',
-            videoList: [],
+            videoList: []
         }
         this.redirectToSelectedVideo = this.redirectToSelectedVideo.bind(this);
     }

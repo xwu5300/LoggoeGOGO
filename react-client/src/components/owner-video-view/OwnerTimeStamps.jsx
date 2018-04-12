@@ -10,7 +10,7 @@ class OwnerTimeStamps extends React.Component {
       <div id="owner-time-stamps">
       {this.props.timeStamps.map((timeStamp, i) => (
           <div className="time-stamp" key={i}>
-            Timtamp: {timeStamp.timestamp}
+            Timestamp: {timeStamp.timestamp}
           </div>
       ))}
     </div>   
