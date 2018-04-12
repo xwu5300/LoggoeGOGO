@@ -1,6 +1,6 @@
 const {saveVideo, 
   saveUser, 
-  selectAll, 
+  selectAllVideos, 
   retrieveTimestamp, 
   saveTimestamp, 
   deleteTimestamp, 
@@ -9,6 +9,7 @@ const {saveVideo,
   insertOwner} = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
 
@@ -33,6 +34,7 @@ app.post('/username/login', function (req, res) {
     }
   });
 });
+
 
 //---------------------------------------------------------USER REGISTRATION
 // post request for either student or owner username to db
@@ -59,7 +61,7 @@ app.post('/username/register', (req, res) => {
 
 //---------------------------------------------------------STUDENT USER REQUESTS
 //get all videos for student homepage
-app.get('/student/homepage', (req, res) => selectAll((videos) => res.send(videos)));
+app.get('/student/homepage', (req, res) => selectAllVideos((videos) => res.send(videos)));
 
 //---------------------------------------------------------OWNER USER REQUESTS
 
@@ -69,8 +71,11 @@ app.get('/owner/search', (req, res) => {
 });
 
 //get all videos for owner
-app.get('/owner/videoList', (req, res) => {
-  selectAll((videos) => {res.send(videos)});
+
+app.get('/owner/videoList', function(req, res) {
+  selectAllVideos((videos) => {
+    res.send(videos);
+  })
 })
 
 //---------------------------------------------------------WORKING WITH TIMESTAMPS
@@ -91,6 +96,7 @@ app.delete('/timestamps', function (req, res) {
 })
 
 //---------------------------------------------------------SERVER
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
