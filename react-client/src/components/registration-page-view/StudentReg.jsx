@@ -7,7 +7,7 @@ class StudentReg extends React.Component {
       super(props);
       this.state = {
         value: '',
-        student: true
+        student: true //Is this necessary??
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,7 +29,9 @@ class StudentReg extends React.Component {
         // console.log('here')
         axios.post('/username/register', user)
         .then((response) => {
-          console.log(response);
+          console.log(user);
+          this.props.redirect(user);
+
         })
         .catch((err) => {
           console.log('error in client side', err);

@@ -21,18 +21,18 @@ class StudentVideo extends React.Component {
   }
 
   componentDidMount(){
-    const videoId = this.props.videoId || 'fju9ii8YsGs'
+    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     this.getAllTimestamps(videoId);
   }
 
   saveTimeStamp(timestamp) {
     const user = this.props.studentId || 1
-    const videoId = this.props.videoId || 'fju9ii8YsGs'
+    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     //save to database
     axios.post('/timestamps', {
       params: {
         studentId: user,
-        videoId: this.props.videoId || videoId,
+        videoId: this.props.location.videoId || videoId,
         timestamp: timestamp
       }
     })
@@ -41,11 +41,11 @@ class StudentVideo extends React.Component {
 
   deleteTimestamp(timestamp) {
     const user = this.props.studentId || 1;
-    const videoId = this.props.videoId || 'fju9ii8YsGs';
+    const videoId = this.props.location.videoId || 'fju9ii8YsGs';
     axios.delete('/timestamps', {
       params: {
         studentId: user,
-        videoId: this.props.videoId || videoId,
+        videoId: this.props.location.videoId || videoId,
         timestamp: timestamp
       }
     })
@@ -55,10 +55,10 @@ class StudentVideo extends React.Component {
 
   //gets videoId as a prop
   getAllTimestamps() {
-    const videoId = this.props.videoId || 'fju9ii8YsGs'
+    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     axios.get('/timestamps', {
       params: {
-        videoId: this.props.videoId || videoId
+        videoId: this.props.location.videoId || videoId
       }
     })
     .then((data) => (data.data.map((TS) => {return TS.timestamp})))
@@ -71,7 +71,7 @@ class StudentVideo extends React.Component {
 
 
   render() {    
-    const videoId = this.props.videoId || 'fju9ii8YsGs'
+    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     return (<div>
       <VideoPlayer 
       videoId={videoId} 

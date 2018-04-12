@@ -3,11 +3,28 @@ import axios from 'axios';
 import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
-
+import {withRouter} from 'react-router-dom';
 
 class OwnerVideo extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      timeStamps: []
+    }
+  }
+
+  componentDidMount() {
+    this.showTimestamps();
+  }
+
+  showTimestamps(videoId) {
+    axios.get('/timestamps', {params: {videoId: this.props.location.video.videoId}})
+         .then((data) => {
+           var timeStamps = data.data.sort()
+           this.setState({
+             timeStamps: timeStamps
+           })
+         })
   }
 
   render() {
@@ -15,8 +32,8 @@ class OwnerVideo extends React.Component {
       <div id="owner-video-view">
         Owner Videos
         <div>
-          {!!this.props.video && <OwnerVideoPlayer video={this.props.video}/>}
-          {this.props.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.props.timeStamps}/>}
+          {!!this.props.location.video && <OwnerVideoPlayer video={this.props.location.video}/>}
+          {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
           <Analytics />
         </div>  
       </div>  
@@ -24,4 +41,4 @@ class OwnerVideo extends React.Component {
   }
 }
 
-export default OwnerVideo;
+export default withRouter(OwnerVideo);
