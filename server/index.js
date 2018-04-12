@@ -36,14 +36,14 @@ app.post('/timestamps', function (req, res) {
 
 // post username to db for login;
 app.post('/username/login', function (req, res) {
-  selectAllUsers(function(err, response) {
+    // console.log(req.body.username);
+  selectAllUsers(req.body.username, function(err, response) {
     if (err) {
-    
-      res.send([]);
+        console.log(err);
+      res.send();
     } else {
-    console.log('response', response)
-
-      res.status(201).send(response);
+      console.log('response', req.body)
+      res.status(201).send();
     }
   });
 });
