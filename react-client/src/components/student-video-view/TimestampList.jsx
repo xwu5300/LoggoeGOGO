@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TimestampListEntry from './TimestampListEntry.jsx';
 
 class TimestampList extends React.Component {

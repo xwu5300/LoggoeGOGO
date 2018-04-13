@@ -1,74 +1,108 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
 import {withRouter} from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import axios from 'axios';
+
+import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 class LandingPage extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      value: '',
-      exists: false,
+      username: '',
     }
+
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.sendTo = this.sendTo.bind(this);
   }
 
-// getting the input value
-  handleChange(e) {
-    this.setState({value: e.target.value})
+  handleChange(input) {
+    this.setState({username: input})
   }
 
-
- // submitting the input value;
-  handleSubmit() {
-    var user = {username: this.state.value}
-
-    // sending user data; 
-    axios.post('/username/login', user)
+  handleLogin() {
+    axios.post('/login', {username: this.state.username})
       .then((response) => {
+        const isAuthenticated = !!response.data.length;
 
-        if (!response.data.length) {
-          this.setState({
-            value: ''
-          })
-          window.alert('username does not exist');
+        if (isAuthenticated) {
+          const isOwner = response.data[0].owner;
+          const username = response.data[0].name;
+
+          (isOwner) ? 
+            this.sendTo('/owner', username) : 
+            this.sendTo('/student', username); 
+        
         } else {
-          if (response.data[0].owner) {
-            this.props.history.push({
-              pathname: '/owner',
-              username: response.data[0].name,
-            })
-          } else {
-            this.props.history.push({
-              pathname: '/student',
-              username: response.data[0].name,
-            })
-          }
+          this.refs['autocomplete'].setState({searchText:''});
+          window.alert('Username does not exist');
         }
       })
-      .catch((err) => console.log('PROBLEMS: ', err))
+      .catch((err) => console.log('ERROR: ', err))
   }
 
-  handleRegister() {
+  sendTo(path, username = '') {
     this.props.history.push({
-      pathname: '/registration'
+      pathname: path,
+      username: username,
     })
   }
-  
-  render () {
-    return (
-      <div>
-          <h3> Username: </h3>
-          <label>
-            Name:
-           <input type="text" name="username" value={this.state.value} onChange={this.handleChange}/>
-          </label>
 
-           <button onClick={this.handleSubmit}>Submit</button>
-           <button onClick={this.handleRegister}>Register</button> 
-    </div>
+  render () {
+    const paperStyle = {
+      height: 'auto',
+      width: 'auto',
+      padding: 10,
+      textAlign: 'center',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      display: 'inline-block',
+    };
+
+    const buttonStyle = {
+      height: 'auto',
+      width: '100%',
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+
+    return (
+      <Paper style={paperStyle} zDepth={1}>
+
+          <h3> Team Loggoe GoGo App </h3>
+
+          <AutoComplete 
+            dataSource={[]} 
+            hintText="Username"
+            ref={'autocomplete'}
+            onUpdateInput={this.handleChange}
+            onNewRequest={this.handleLogin}
+            />
+
+          <Paper>
+            <FlatButton 
+              style={buttonStyle} 
+              label='Login' 
+              onClick={this.handleLogin}
+              />
+          </Paper>
+
+          <Paper>
+            <FlatButton 
+              style={buttonStyle} 
+              label='Register' 
+              onClick={() => {this.sendTo('/registration')}}
+              />
+          </Paper>
+
+      </Paper>
     )
   }
 

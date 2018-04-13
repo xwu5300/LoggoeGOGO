@@ -1,4 +1,5 @@
 import React from 'react';
+
 import VideoListEntry from './VideoListEntryView.jsx';
 
 const VideoList = ({videos, redirect}) => (

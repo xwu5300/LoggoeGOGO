@@ -1,6 +1,7 @@
 import React from 'react';
-import YouTube from 'react-youtube';
 import axios from 'axios';
+
+import YouTube from 'react-youtube';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class VideoPlayer extends React.Component {
       videoId: this.props.videoId,
       player: null
     };
+
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
@@ -49,15 +51,15 @@ class VideoPlayer extends React.Component {
 
     return (
       <div>
-      <YouTube
-        videoId={this.state.videoId}
-        opts={opts}
-        onReady={this.onReady}
-      />
-      <button onClick={this.onPlayVideo}>Play</button>
-      <button onClick={this.onPauseVideo}>Pause</button>
-      {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
-      <button onClick={this.saveTimeStamp}>Confused</button>
+        <YouTube
+          videoId={this.state.videoId}
+          opts={opts}
+          onReady={this.onReady}
+        />
+        <button onClick={this.onPlayVideo}>Play</button>
+        <button onClick={this.onPauseVideo}>Pause</button>
+        {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
+        <button onClick={this.saveTimeStamp}>Confused</button>
       </div>
     );
   }
