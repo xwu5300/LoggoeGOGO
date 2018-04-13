@@ -1,4 +1,5 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
 
 class OwnerTimeStamps extends React.Component {
   constructor(props) {
@@ -6,15 +7,25 @@ class OwnerTimeStamps extends React.Component {
   }
 
   render() {
+    console.log('timestamp in owner time stamps', this.props.timeStamps)
     return (
-      <div id="owner-time-stamps">
+      <div id="owner-time-stamps" >
       {this.props.timeStamps.map((timeStamp, i) => (
-          <div className="time-stamp" key={i}>
-            Timestamp: {timeStamp.timestamp}
+        <Paper style={{margin: '20px'}}>
+          <div className="time-stamp" key={i} style={{padding: '20px', display: 'block'}}>
+            <div style={{display: 'block'}}>
+              Timestamp: {(timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')}
+            </div>
+            <div style={{display: 'block'}}>
+              Student: {timeStamp.name}
+            </div>
+            <div style={{display: 'block'}}>
+              Comment: {timeStamp.comment}
+            </div>
           </div>
+        </Paper>
       ))}
     </div>   
-
     )
   }
 }

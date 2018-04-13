@@ -5,6 +5,7 @@ import axios from 'axios';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import Search from './owner-homepage-view/Search.jsx';
 import OwnerVideo from './OwnerVideoView.jsx';
+import Paper from 'material-ui/Paper';
 
 class OwnerHomepage extends React.Component {
   constructor(props) {
@@ -61,9 +62,20 @@ class OwnerHomepage extends React.Component {
   }
 
   render () {
+    const style = {
+      height: '100%',
+      width: 'auto',
+      margin: '30px',
+      textAlign: 'center',
+      display: 'block',
+      padding: '30px',
+      background: '#D8E4EA'
+    }
+    
     return (
+      <Paper style={style} zDepth={1}>
       <div id="owner-homepage-app">
-        <header className="navbar"><h1>Owner Videos</h1></header>
+        <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getVideos}/>
           <VideoList 
@@ -73,6 +85,19 @@ class OwnerHomepage extends React.Component {
           />
         </div>  
       </div>   
+      </Paper>
+
+      // <div id="owner-homepage-app">
+      //   <header className="navbar"><h1>Owner Videos</h1></header>
+      //   <div className="main">
+      //     <Search getVideos={this.getVideos}/>
+      //     <VideoList 
+      //       userId={this.state.userId}
+      //       videos={this.state.videos} 
+      //       redirect={this.sendToSelectedVideo}
+      //     />
+      //   </div>  
+      // </div>   
     )
   }
 }

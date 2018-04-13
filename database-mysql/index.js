@@ -127,7 +127,7 @@ const getTimestamp = (videoId, userId, callback) => {
   })
 }
 const getOwnerTimestamp = (videoId, callback) => {
-  const query = `SELECT timestamp, userId FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`;
+  const query = `select timestamps.comment, timestamps.timestamp, users.name from timestamps inner join users on users.id = timestamps.userId WHERE timestamps.videoId = '${videoId}' ORDER BY timestamp asc;`;
 
   connection.query(query, (err, results, fields) => {
     (err) ?
