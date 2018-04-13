@@ -27,6 +27,7 @@ class OwnerHomepage extends React.Component {
   getVideos(query) {
     axios.get('/owner/search', {params: {query: query, userId: this.state.userId}})
          .then((data) => {
+           console.log(data);
            this.setState({
              videos: [...this.state.videos, data.data]
            })
@@ -52,10 +53,10 @@ class OwnerHomepage extends React.Component {
           })
   }
 
-  sendToSelectedVideo(videoId) {
+  sendToSelectedVideo(video) {
     this.props.history.push({
         pathname: '/owner/video',
-        videoId: videoId,
+        video: video, 
         userId: this.state.userId
       })
   }
