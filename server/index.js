@@ -1,105 +1,102 @@
-const {
-  saveVideo, 
-  saveUser, 
-  selectAllVideos, 
-  retrieveTimestamp, 
-  saveTimestamp, 
-  deleteTimestamp, 
-  selectAllUsers, 
-  insertStudent, 
-  insertOwner,
-  retrieveUserId,
-  selectOwnerVideos,
-  selectCurrentVideo,
-  retrieveOwnerTimestamp,
-  getBuckets
-} = require('../database-mysql');
-const express = require('express');
 const bodyParser = require('body-parser');
+const express = require('express');
+const moment = require('moment');
+const axios = require('axios');
+const {
+  getOwnerTimestamp,
+  getCurrentVideo,
+  getOwnerVideos,
+  getTimestamp, 
+  getAllVideos, 
+  getUserId,
+  getUser, 
+  setTimestamp, 
+  setVideo, 
+  setUser,
+  getBuckets,
+  deleteTimestamp, 
+} = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
 const api = require('../config.js').API;
 
 const app = express();
-const axios = require('axios');
-const moment = require('moment');
+
+//---------------------------------------------------------MIDDLEWARE
 
 app.use(express.static(__dirname + '/../react-client/dist'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //---------------------------------------------------------USER LOGIN
 
-// post username to db for login;
-app.post('/username/login', function (req, res) {
-    // console.log(req.body.username);
-  selectAllUsers(req.body.username, function(err, response) {
-    if (err) {
-      console.log(err);
-      res.send();
-    } else {
+app.post('/login', (req, res) => {
+  getUser(req.body.username, (err, response) => {
+    (err) ? 
+      res.status(403).send(err) :
       res.status(201).send(response);
-    }
   });
 });
 
 //---------------------------------------------------------USER REGISTRATION
-// post request for either student or owner username to db
-app.post('/username/register', (req, res) => {
-  if (req.body.student) {
-    insertStudent(req.body, function(err, response) {
-      if (err) {
-        console.log(err);
-      } else {
-          res.status(201).send(response);
-      }
-    })
-  } else {
-    insertOwner(req.body, function(err, response) {
-      if (err) {
-        console.log(err)
-      } else {
-        res.status(201).send(response);
-      }
-    })
-  }
-});
 
-//---------------------------------------------------------USER ID
-//get userId for owner homepage and student homepage
-app.get('/users', (req, res) => {
-  retrieveUserId(req.query.user, (userId) => {
-    res.send(userId);
+app.post('/register', (req, res) => {
+  getUser(req.body.username, (err, response) => {
+    if (err) res.status(403).send(err);
+    
+    let isExist = !!response.length;
+
+    if (isExist) {
+      res.status(201).send(true);
+    } 
+    else {
+      setUser(req.body, (err, response) => 
+        (err) ? 
+          res.status(403).send(err) :
+          res.status(201).send(false)
+      )      
+    }
+
   })
 })
 
+//---------------------------------------------------------USER ID
+//get userId for owner homepage and student homepage
+app.get('/user/id', (req, res) => {
+  getUserId(req.query.user, (userId) => 
+    res.send(userId)
+  )
+})
 
 //---------------------------------------------------------STUDENT USER REQUESTS
 //get all videos for student homepage
-app.get('/student/homepage', (req, res) => selectAllVideos((videos) => res.send(videos)));
+app.get('/student/homepage', (req, res) => 
+  getAllVideos((videos) => 
+    res.send(videos)
+  )
+)
 
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/search', (req, res) => {
   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
     (video) => {
-      axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`)
-      .then((data) => {
-        var duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-        saveVideo(video[0], req.query.userId, duration, () => {
-          selectCurrentVideo(video[0].id.videoId, (video) => {
-            // console.log('selectCurrentVideo in server', video[0])
-            res.send(video[0])
-          })
-        })
+      let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
+      //get duration
+      axios.get(url).then((data) => {
+        let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+        setVideo(video[0], req.query.userId, duration, () => 
+          getCurrentVideo(video[0].id.videoId, (video) => 
+            res.send(video)
+          )
+        )
       });
     });
 });
 
 //get all videos for owner.
-
-app.get('/owner/videoList', function(req, res) {
-  selectOwnerVideos(req.query.userId, (videos) => {
+app.get('/owner/videoList', (req, res) => {
+  getOwnerVideos(req.query.userId, (videos) => {
     res.send(videos);
   })
 })
@@ -116,34 +113,31 @@ app.get('/buckets', (req,res) => {
   })
 })
 
-
-
 //---------------------------------------------------------WORKING WITH TIMESTAMPS
 
-app.get('/timestamps', function (req, res) {
-  const videoId = req.query.videoId
-  retrieveTimestamp(videoId, req.query.userId, (data) => {res.json(data)});  
+app.get('/timestamps', (req, res) => {
+  let videoId = req.query.videoId
+  getTimestamp(videoId, req.query.userId, (data) => {res.json(data)});  
 })
 
-app.get('/ownertimestamps', function (req, res) {
-  const videoId = req.query.videoId
-  retrieveOwnerTimestamp(videoId, (data) => {
-    res.send(data)});  
+
+app.get('/timestamps/owner', (req, res) => {
+  let videoId = req.query.videoId
+  getOwnerTimestamp(videoId, (data) => {res.send(data)});  
 })
 
-app.post('/timestamps', function (req, res) {
-  const params = req.body.params;
-  saveTimestamp(params, (success) => {res.status(201).send()});
+app.post('/timestamps', (req, res) => {
+  let params = req.body.params;
+  setTimestamp(params, (success) => {res.status(201).send()});
 })
 
-app.delete('/timestamps', function (req, res) {
-  const params = req.query;
+app.delete('/timestamps', (req, res) => {
+  let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
 
 //---------------------------------------------------------SERVER
 
-
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });

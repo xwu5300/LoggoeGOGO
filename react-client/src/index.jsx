@@ -1,12 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Link, Switch, History} from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import React from 'react';
 import $ from 'jquery';
-import LandingPage from './components/LandingPageView.jsx';
+
 import RegistrationPage from './components/RegistrationPageView.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import StudentHomepage from './components/StudentHomepageView.jsx';
-import StudentVideo from './components/StudentVideoView.jsx';
 import OwnerHomepage from './components/OwnerHomepageView.jsx';
+import StudentVideo from './components/StudentVideoView.jsx';
+import LandingPage from './components/LandingPageView.jsx';
 import OwnerVideo from './components/OwnerVideoView.jsx';
 
 class App extends React.Component {
@@ -16,7 +18,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
+      <MuiThemeProvider>
         <Router>
           <Switch>
             <LandingPage exact path="/" component={LandingPage}/>
@@ -27,7 +29,7 @@ class App extends React.Component {
             <OwnerVideo exact path="/owner/video" component={OwnerVideo}/>
           </Switch>
         </Router>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }
