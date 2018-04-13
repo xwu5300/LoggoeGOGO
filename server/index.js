@@ -85,11 +85,11 @@ app.get('/owner/search', (req, res) => {
       //get duration
       axios.get(url).then((data) => {
         let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-        setVideo(video[0], req.query.userId, duration, () => 
+        setVideo(video[0], req.query.userId, duration, () => {
           getCurrentVideo(video[0].id.videoId, (video) => 
-            res.send(video)
+            res.status(200).send(video)
           )
-        )
+        })
       });
     });
 });
