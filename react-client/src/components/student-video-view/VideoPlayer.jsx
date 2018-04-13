@@ -9,14 +9,21 @@ class VideoPlayer extends React.Component {
 
     this.state = { 
       videoId: this.props.videoId,
-      player: null
+      player: null,
+      comment: ''
     };
-
+    this.handleChange = this.handleChange.bind(this);
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
   }
+
+
+  handleChange(event) {
+    this.setState({comment: event.target.value});
+  }
+
 
   onReady(event) {
     this.setState({
@@ -34,9 +41,11 @@ class VideoPlayer extends React.Component {
   }
 
 
+
   saveTimeStamp() {
     const timestamp = Math.floor(this.state.player.getCurrentTime());
-    this.props.saveTimeStamp(timestamp);
+    // console.log('new state of comment', this.state.comment);
+    this.props.saveTimeStamp(timestamp, this.state.comment);
   }
 
   render() {
@@ -59,7 +68,11 @@ class VideoPlayer extends React.Component {
         <button onClick={this.onPlayVideo}>Play</button>
         <button onClick={this.onPauseVideo}>Pause</button>
         {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
-        <button onClick={this.saveTimeStamp}>Confused</button>
+        <label>
+          Comment:
+          <input type="text" value={this.state.comment} onChange={this.handleChange} />
+        </label>
+        <button onClick={this.saveTimeStamp} >Confused</button>
       </div>
     );
   }
