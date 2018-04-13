@@ -10,16 +10,16 @@ class TimestampListEntry extends React.Component {
   }
 
   onChangeVideo() {
-    this.props.changeVideo(this.props.timestamp)
+    this.props.changeVideo(this.props.timestamp.timestamp)
   }
 
   onDeleteTimestamp() {
-    this.props.deleteTimestamp(this.props.timestamp)
+    this.props.deleteTimestamp(this.props.timestamp.timestamp)
   }
   
   render() {
     return (
-      <li>{this.props.timestamp}
+      <li>{this.props.timestamp.timestamp}{this.props.timestamp.comment}
       <button onClick={this.onChangeVideo}>Watch This Clip</button>
       <button onClick={this.onDeleteTimestamp}>Delete</button>
       </li>

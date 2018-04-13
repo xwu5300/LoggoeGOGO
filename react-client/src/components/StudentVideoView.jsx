@@ -34,7 +34,11 @@ class StudentVideo extends React.Component {
            this.getAllTimestamps();
          })
   }
-  saveTimeStamp(timestamp) {
+  saveTimeStamp(timestamp, comment) {
+    this.setState({
+      inputComment: comment
+    })
+    
     const user = this.state.userId || 1
     const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     //save to database
@@ -42,7 +46,8 @@ class StudentVideo extends React.Component {
       params: {
         userId: user,
         videoId: this.props.location.videoId || videoId,
-        timestamp: timestamp
+        timestamp: timestamp,
+        comment: this.state.inputComment
       }
     })
     .then(() => {this.getAllTimestamps()})
@@ -71,8 +76,15 @@ class StudentVideo extends React.Component {
         userId: this.state.userId
       }
     })
-    .then((data) => (data.data.map((TS) => {return TS.timestamp})))
-    .then((timestamps) => this.setState({timestamps: timestamps}))
+
+    // NEED TO START HERE once i get the data on success
+// determine how i want to use the info i receive
+
+    .then((data) => (data.data.map((TS) => {
+      return TS})))
+    .then((TS) => {
+        this.setState({timestamps: TS})
+    })
   }
 
   changeVideo(timestamp) {
