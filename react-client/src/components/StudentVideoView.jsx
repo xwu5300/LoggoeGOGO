@@ -1,11 +1,10 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import React from 'react';
 import axios from 'axios';
+import $ from 'jquery';
+
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
-
-//props.videoId and props.studentId
 
 class StudentVideo extends React.Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class StudentVideo extends React.Component {
     
   }
   getUserId(user) {
-    axios.get('/users', {params: {user: user}})
+    axios.get('/user/id', {params: {user: user}})
          .then((data) => {
            this.setState({
              userId: data.data[0].id
@@ -80,21 +79,19 @@ class StudentVideo extends React.Component {
     this.setState({startingTimestamp: timestamp})
   }
 
-
   render() {    
-    console.log('this.state.userId', this.state.userId)
     const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     return (<div>
       <VideoPlayer 
-      videoId={videoId} 
-      startingTimestamp={this.state.startingTimestamp}
-      saveTimeStamp={this.saveTimeStamp}
-      />
+        videoId={videoId} 
+        startingTimestamp={this.state.startingTimestamp}
+        saveTimeStamp={this.saveTimeStamp}/>
+
       <TimestampList 
-      timestamps={this.state.timestamps} 
-      deleteTimestamp={this.deleteTimestamp}
-      changeVideo={this.changeVideo}
-      />
+        timestamps={this.state.timestamps} 
+        deleteTimestamp={this.deleteTimestamp}
+        changeVideo={this.changeVideo}/>
+
     </div>)
   }
 }

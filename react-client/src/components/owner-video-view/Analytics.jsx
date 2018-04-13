@@ -8,7 +8,7 @@ class Analytics extends React.Component {
   render() {
     return (
       <div id="analytics">
-        Analytic
+        Analytics
       </div>
     )
   }

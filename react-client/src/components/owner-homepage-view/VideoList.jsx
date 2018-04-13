@@ -1,40 +1,10 @@
 import React from 'react';
+import VideoListEntry from './VideoListEntry.jsx';
 
-class VideoList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div id="owner-homepage-video-list">
-        Video List
-        {this.props.videos.map((video) => (
-          <div id="owner-homepage-video-list-entry" key={video.id}
-              onClick={() => {
-                this.props.redirect(video)
-              }}
-            >
-              <div className="media-left media-middle">
-                <img className="media-object" 
-                  src={video.image} 
-                  alt="" 
-                />
-              </div>
-              <div className="media-body">
-                <div className="video-list-entry-title">
-                  {video.title}
-                </div>
-                <div className="video-list-entry-detail">
-                  {video.description}
-                </div>
-              </div>
-            </div>
-        ))}
-      </div>  
-  
-    )
-  }
-}
+const VideoList = ({videos, redirect}) => (
+  <div>
+    {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect}/>)}
+  </div>
+)
 
 export default VideoList
