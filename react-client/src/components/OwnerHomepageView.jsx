@@ -27,9 +27,8 @@ class OwnerHomepage extends React.Component {
   getVideos(query) {
     axios.get('/owner/search', {params: {query: query, userId: this.state.userId}})
          .then((data) => {
-           console.log(data);
            this.setState({
-             videos: [...this.state.videos, data.data]
+            videos: [...this.state.videos, data.data[0]]
            })
          })
   }
