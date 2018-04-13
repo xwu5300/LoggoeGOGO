@@ -14,7 +14,7 @@ class TimestampList extends React.Component {
   render() {
     return (
       <div>
-        <ul>
+        <div>
           {this.props.timestamps.map((timestamp, index) => {
             return <TimestampListEntry 
             key={index} 
@@ -22,7 +22,7 @@ class TimestampList extends React.Component {
             changeVideo={this.props.changeVideo} 
             deleteTimestamp={this.props.deleteTimestamp}/>
           })}
-        </ul>
+        </div>
       </div>
     );
   }

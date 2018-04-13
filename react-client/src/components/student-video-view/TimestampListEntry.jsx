@@ -1,4 +1,6 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class TimestampListEntry extends React.Component {
   constructor(props) {
@@ -19,10 +21,15 @@ class TimestampListEntry extends React.Component {
   
   render() {
     return (
-      <li>{this.props.timestamp}
-      <button onClick={this.onChangeVideo}>Watch This Clip</button>
-      <button onClick={this.onDeleteTimestamp}>Delete</button>
-      </li>
+      <Paper style={{width: '80%', margin: '10px', padding: '20px', display: 'inline-block', float: 'left'}}>
+        <div style={{float: 'left'}}>
+          {(this.props.timestamp / 60 | 0) + ':' + String(this.props.timestamp % 60).padStart(2, '0')}
+        </div>
+        <div style={{float: 'right'}}>
+          <button onClick={this.onChangeVideo}>Watch This Clip</button>
+          <button onClick={this.onDeleteTimestamp}>Delete</button>
+        </div>
+      </Paper>
       );
   }
 
