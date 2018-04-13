@@ -19,7 +19,7 @@ class OwnerVideo extends React.Component {
   }
 
   showTimestamps() {
-    axios.get('/timestamps/owner', {params: {videoId: this.props.location.videoId}})
+    axios.get('/timestamps/owner', {params: {videoId: this.props.location.video.videoId}})
       .then((data) => {
         var timeStamps = data.data.sort((a, b)=> a.timestamp - b.timestamp)
         this.setState({timeStamps: timeStamps})
@@ -31,7 +31,7 @@ class OwnerVideo extends React.Component {
       <div id="owner-video-view">
         Owner Videos
         <div>
-          <OwnerVideoPlayer videoId={this.props.location.videoId}/>
+          <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>
           {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
           {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
         </div>  
