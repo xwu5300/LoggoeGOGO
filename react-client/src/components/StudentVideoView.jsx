@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
+import Paper from 'material-ui/Paper';
 
 class StudentVideo extends React.Component {
   constructor(props) {
@@ -35,10 +36,6 @@ class StudentVideo extends React.Component {
          })
   }
   saveTimeStamp(timestamp, comment) {
-    this.setState({
-      inputComment: comment
-    })
-    
     const user = this.state.userId || 1
     const videoId = this.props.location.videoId || 'fju9ii8YsGs'
     //save to database
@@ -47,7 +44,7 @@ class StudentVideo extends React.Component {
         userId: user,
         videoId: this.props.location.videoId || videoId,
         timestamp: timestamp,
-        comment: this.state.inputComment
+        comment: comment
       }
     })
     .then(() => {this.getAllTimestamps()})
@@ -76,10 +73,6 @@ class StudentVideo extends React.Component {
         userId: this.state.userId
       }
     })
-
-    // NEED TO START HERE once i get the data on success
-// determine how i want to use the info i receive
-
     .then((data) => (data.data.map((TS) => {
       return TS})))
     .then((TS) => {
@@ -93,18 +86,39 @@ class StudentVideo extends React.Component {
 
   render() {    
     const videoId = this.props.location.videoId || 'fju9ii8YsGs'
-    return (<div>
-      <VideoPlayer 
-        videoId={videoId} 
-        startingTimestamp={this.state.startingTimestamp}
-        saveTimeStamp={this.saveTimeStamp}/>
 
-      <TimestampList 
-        timestamps={this.state.timestamps} 
-        deleteTimestamp={this.deleteTimestamp}
-        changeVideo={this.changeVideo}/>
+    const style = {
+      height: '100%',
+      width: '100%',
+      margin: '30px',
+      textAlign: 'center',
+      display: 'inline-block',
+      padding: '30px',
+      background: '#D8E4EA',
+    }
 
-    </div>)
+    return (
+      <Paper style={style} zDepth={1}>
+      <div>
+        <div>
+        <Paper style={{margin: '20px', padding: '20px', width: '60%', float: 'left'}}>
+          <VideoPlayer 
+            videoId={videoId} 
+            startingTimestamp={this.state.startingTimestamp}
+            saveTimeStamp={this.saveTimeStamp}/>
+        </Paper>
+        </div>
+        <div>
+        <Paper style={{margin: '20px', padding: '20px', width: '30%', float: 'left'}}>
+          <TimestampList 
+            timestamps={this.state.timestamps} 
+            deleteTimestamp={this.deleteTimestamp}
+            changeVideo={this.changeVideo}/>
+        </Paper>
+        </div>
+      </div>
+      </Paper>
+    )
   }
 }
 

@@ -1,4 +1,7 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
+import AutoComplete from 'material-ui/AutoComplete';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Search extends React.Component {
   constructor(props) {
@@ -16,17 +19,36 @@ class Search extends React.Component {
   }
 
   render() {
+    const style = {
+      height: '100%',
+      width: 'auto',
+      margin: '20px',
+      textAlign: 'center',
+      display: 'inline-block',
+      padding: '10px'
+    }
+    
+    const button = {
+      height: '10px',
+
+    }
     return (
+      <Paper style={style} zDepth={1}>
       <div id="owner-homepage-search-bar">
-        <input value={this.state.userInput} 
+        <AutoComplete 
+          dataSource={[]} 
+          value={this.state.userInput} 
           type="text"
-          onChange={this.updateInput}
+          onUpdateInput={this.updateInput}
         />
-        <button value="search" 
-          onClick={() => this.props.getVideos(this.state.userInput)}
-        > Search
-        </button>
+        <RaisedButton 
+          label="Search" 
+          value="search"
+          onClick={() => this.props.getVideos(this.state.userInput)} 
+        />
+
       </div>
+      </Paper>
     )
   }
 }

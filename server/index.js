@@ -128,7 +128,7 @@ app.get('/timestamps/owner', (req, res) => {
 
 app.post('/timestamps', (req, res) => {
   let params = req.body.params;
-//   console.log(req.body)
+  console.log(params)
   setTimestamp(params, (success) => {res.status(201).send()});
 })
 

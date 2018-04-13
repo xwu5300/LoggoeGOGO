@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import YouTube from 'react-youtube';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -44,14 +45,13 @@ class VideoPlayer extends React.Component {
 
   saveTimeStamp() {
     const timestamp = Math.floor(this.state.player.getCurrentTime());
-    // console.log('new state of comment', this.state.comment);
     this.props.saveTimeStamp(timestamp, this.state.comment);
   }
 
   render() {
     const opts = {
       height: '390',
-      width: '640',
+      width: '500',
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: this.props.startingTimestamp,
@@ -59,20 +59,27 @@ class VideoPlayer extends React.Component {
     };
 
     return (
-      <div>
-        <YouTube
-          videoId={this.state.videoId}
-          opts={opts}
-          onReady={this.onReady}
-        />
-        <button onClick={this.onPlayVideo}>Play</button>
-        <button onClick={this.onPauseVideo}>Pause</button>
-        {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
-        <label>
-          Comment:
-          <input type="text" value={this.state.comment} onChange={this.handleChange} />
-        </label>
-        <button onClick={this.saveTimeStamp} >Confused</button>
+      <div style={{display: 'block', margin: '20px'}}>
+        <div>
+          <YouTube
+            videoId={this.state.videoId}
+            opts={opts}
+            onReady={this.onReady}
+          />
+        </div>
+        <br/>
+        <div>
+          <div>
+            <RaisedButton onClick={this.onPlayVideo} label="Play" style={{margin: '5px'}}/>
+            <RaisedButton onClick={this.onPauseVideo} label="Pause" style={{margin: '5px'}}/>
+            {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
+            <RaisedButton onClick={this.saveTimeStamp} label="Confused" style={{margin: '5px'}} />
+          </div>
+          <label>
+            Comment:
+            <input type="text" value={this.state.comment} onChange={this.handleChange} />
+          </label>
+        </div>
       </div>
     );
   }
