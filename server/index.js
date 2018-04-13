@@ -127,7 +127,8 @@ app.get('/timestamps', function (req, res) {
 
 app.get('/ownertimestamps', function (req, res) {
   const videoId = req.query.videoId
-  retrieveOwnerTimestamp(videoId, (data) => {res.send(data)});  
+  retrieveOwnerTimestamp(videoId, (data) => {
+    res.send(data)});  
 })
 
 app.post('/timestamps', function (req, res) {
