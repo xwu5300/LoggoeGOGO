@@ -23,8 +23,8 @@ class Analytics extends React.Component {
   getBuckets() {
     axios.get('/buckets', {
       params: {
-        videoId : 'ZK3O402wf1c',
-        duration: 2388
+        videoId : this.props.video.videoId,
+        duration: this.props.video.duration
       }
     })
     .then((data) => {
@@ -36,6 +36,8 @@ class Analytics extends React.Component {
       })
     })
   }
+
+  
 
   createChart() {
       const data = this.state.counts.slice();
@@ -77,9 +79,3 @@ class Analytics extends React.Component {
 }
 export default Analytics;
 
-
-
-// const BarChart = ({ data }) =>
-//   <C3Chart data={{ json: data, type: 'bar' }} />;
-
-// export default BarChart;
