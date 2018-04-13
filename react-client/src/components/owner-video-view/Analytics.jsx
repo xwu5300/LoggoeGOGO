@@ -1,29 +1,85 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import C3Chart from 'react-c3js';
-import 'c3/c3.css';
+import axios from 'axios';
+import c3 from 'c3';
 
-const LineChart = ({ data }) =>
-  <C3Chart data={{ json: data }} />;
+class Analytics extends React.Component {
+  constructor(props) {
+    super(props)
 
-const BarChart = ({ data }) =>
-  <C3Chart data={{ json: data, type: 'bar' }} />;
-
-const chartData = {
-  line: {
-    data1: [30, 20, 50, 40, 60, 50],
-    data2: [200, 130, 90, 240, 130, 220],
-    data3: [300, 200, 160, 400, 250, 250]
-  },
-  bar: {
-    data1: [30, 200, 100, 400, 150, 250],
-    data2: [130, 100, 140, 200, 150, 50]
+    this.state = { 
+      buckets: [],
+      counts: []
+    };
+    this.getBuckets=this.getBuckets.bind(this);
+    this.createChart=this.createChart.bind(this);
   }
-};
 
-ReactDOM.render(
-  <div>
-    <LineChart data={chartData.line} />
-    <BarChart data={chartData.bar} />
-  </div>, document.getElementById('app')
-);
+
+  componentDidMount() {
+    this.getBuckets();
+  }
+
+
+  getBuckets() {
+    axios.get('/buckets', {
+      params: {
+        videoId : 'ZK3O402wf1c',
+        duration: 2388
+      }
+    })
+    .then((data) => {
+      this.setState({
+        buckets: 
+        data.data.map((row) => (row.TimeStampGroup)),
+        counts: 
+        data.data.map((row) => (row.total))
+      })
+    })
+  }
+
+  createChart() {
+      const data = this.state.counts.slice();
+      data.unshift('buckets')
+
+      const chart = c3.generate({
+        bindto: '#chart',
+        data: {
+            columns: [
+                data
+           ],
+           type: 'bar'
+       },
+       axis: {
+         x: {
+           type: 'category',
+           categories: this.state.buckets
+          }
+        },
+       bar: {
+           width: {
+               ratio: 1
+            }
+       }
+   });
+  }
+
+
+  //
+  
+  render() {
+    {this.createChart()}
+    return (
+      <div id="chart">
+      </div>
+    );
+  }
+
+}
+export default Analytics;
+
+
+
+// const BarChart = ({ data }) =>
+//   <C3Chart data={{ json: data, type: 'bar' }} />;
+
+// export default BarChart;

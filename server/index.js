@@ -11,7 +11,8 @@ const {
   retrieveUserId,
   selectOwnerVideos,
   selectCurrentVideo,
-  retrieveOwnerTimestamp
+  retrieveOwnerTimestamp,
+  getBuckets
 } = require('../database-mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -103,6 +104,20 @@ app.get('/owner/videoList', function(req, res) {
   })
 })
 
+//---------------------------------------------------------ANALYTICS
+
+app.get('/buckets', (req,res) => {
+  const params = req.query
+  getBuckets(params, (data) => {
+    data.sort(function (a, b) {
+      return Number(a.TimeStampGroup.match(/\d+/)) - Number(b.TimeStampGroup.match(/\d+/));
+    });
+    res.json(data)
+  })
+})
+
+
+
 //---------------------------------------------------------WORKING WITH TIMESTAMPS
 
 app.get('/timestamps', function (req, res) {
@@ -116,12 +131,12 @@ app.get('/ownertimestamps', function (req, res) {
 })
 
 app.post('/timestamps', function (req, res) {
-  let params = req.body.params;
+  const params = req.body.params;
   saveTimestamp(params, (success) => {res.status(201).send()});
 })
 
 app.delete('/timestamps', function (req, res) {
-  let params = req.query;
+  const params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
 

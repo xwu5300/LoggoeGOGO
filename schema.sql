@@ -19,6 +19,7 @@ CREATE TABLE videos (
   title varchar(255) NOT NULL,
   description varchar(255),
   image varchar(255),
+<<<<<<< HEAD
   userId INT(11) NOT NULL,
   duration INT(11)
 );
@@ -26,3 +27,15 @@ INSERT INTO timeStamps (videoId, userId, timeStamp, comment) VALUES ('ZK3O402wf1
 INSERT IGNORE INTO users (name, owner) VALUES ('Jun Yoo', true);
 INSERT IGNORE INTO users (name, owner) VALUES ('Brian', false);
 INSERT IGNORE INTO videos (videoId, title, userId, description, image, duration) VALUES ('ZK3O402wf1c', 'Lec 1 | MIT 18.06 Linear Algebra, Spring 2005', 1, 'Lecture 1: The Geometry of Linear Equations. View …e information at http://ocw.mit.edu/terms More...', 'https://i.ytimg.com/vi/ZK3O402wf1c/default.jpg', 2389);
+=======
+  userId INT(11) NOT NULL
+);
+
+INSERT INTO timeStamps (videoId, userId, timeStamp, comment) VALUES ('ZK3O402wf1c', 2, 132, 'hello so confused.');
+
+INSERT IGNORE INTO users (name, owner) VALUES ('Jun Yoo', true);
+
+INSERT IGNORE INTO users (name, owner) VALUES ('Brian', false);
+
+INSERT IGNORE INTO videos (videoId, title, userId, description, image) VALUES ('ZK3O402wf1c', 'Lec 1 | MIT 18.06 Linear Algebra, Spring 2005', 1, 'Lecture 1: The Geometry of Linear Equations. View …e information at http://ocw.mit.edu/terms More...', 'https://i.ytimg.com/vi/ZK3O402wf1c/default.jpg');
+>>>>>>> finish with analytics component

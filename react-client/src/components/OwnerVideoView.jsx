@@ -31,13 +31,23 @@ class OwnerVideo extends React.Component {
   }
 
   render() {
+
+    let bucket_floors = []
+
+
+    const chartData = {
+      bar: {
+        data1: [30, 200, 100, 400, 150, 250],
+      }
+    };
+
     return (
       <div id="owner-video-view">
         Owner Videos
         <div>
           {!!this.props.location.video && <OwnerVideoPlayer video={this.props.location.video}/>}
           {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-          <Analytics />
+          <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video} />
         </div>  
       </div>  
     )
