@@ -1,5 +1,6 @@
 var path = require('path');
-var SRC_DIR = path.join(__dirname, '/react-client/src');
+var SRC_DIR = path.join(__dirname, '/react-client/src/');
+
 var DIST_DIR = path.join(__dirname, '/react-client/dist');
 
 module.exports = {
@@ -17,6 +18,10 @@ module.exports = {
         query: {
           presets: ['react', 'es2015']
        }
+      },
+      {
+        test: /\.css?/,
+        loader: 'css-loader'
       }
     ]
   }
