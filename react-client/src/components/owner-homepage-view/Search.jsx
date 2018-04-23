@@ -25,19 +25,6 @@ class Search extends React.Component {
   }
 
   render() {
-    const style = {
-      height: '100%',
-      width: 'auto',
-      margin: '20px',
-      textAlign: 'center',
-      display: 'inline-block',
-      padding: '10px'
-    }
-    
-    const button = {
-      height: '10px',
-
-    }
     return (
       <Paper style={style} zDepth={1}>
         <div id="owner-homepage-search-bar">
@@ -61,6 +48,20 @@ class Search extends React.Component {
       </Paper>
     )
   }
+}
+
+const style = {
+  height: '100%',
+  width: 'auto',
+  margin: '20px',
+  textAlign: 'center',
+  display: 'inline-block',
+  padding: '10px'
+}
+
+const button = {
+  height: '10px',
+
 }
 
 export default Search
