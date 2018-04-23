@@ -43,7 +43,7 @@ class OwnerVideoPlayer extends React.Component {
   render() {
     const opts = {
       height: '390',
-      width: '400',
+      width: '500',
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: this.props.startingTimestamp,
@@ -51,16 +51,20 @@ class OwnerVideoPlayer extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{display: 'block'}}>
+        <div>
         <YouTube
           videoId={this.state.videoId}
           opts={opts}
           onReady={this.onReady}
         />
+        </div>
+        <div>
         <RaisedButton style={{margin: '5px'}} onClick={this.onPlayVideo}  label="Play"/>
         <RaisedButton style={{margin: '5px'}} onClick={this.onPauseVideo} label="Pause"/>
         {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
         {/* <button onClick={this.saveTimeStamp}>Confused</button> */}
+        </div>
       </div>
     );
   }

@@ -24,11 +24,11 @@ const VideoListEntry = ({video, redirect}) => {
           />
         </div>
         <div className="media-body" style={{width: '50%', float: 'right'}}>
-          <div className="video-list-entry-title">
+          <div className="video-list-entry-title" style={{fontWeight: 'bold'}}>
             {video.title}
           </div>
           <br/>
-          <div className="video-list-entry-detail">
+          <div className="video-list-entry-detail" style={{color: 'grey'}}>
             {video.description}
           </div>
         </div>

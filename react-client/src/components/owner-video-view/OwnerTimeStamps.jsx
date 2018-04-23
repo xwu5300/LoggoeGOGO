@@ -13,14 +13,14 @@ class OwnerTimeStamps extends React.Component {
       {this.props.timeStamps.map((timeStamp, i) => (
         <Paper style={{margin: '20px'}}>
           <div className="time-stamp" key={i} style={{padding: '20px', display: 'block'}}>
-            <div style={{display: 'block'}}>
-              Timestamp: {(timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')}
+            <div style={{display: 'inline-block'}}>
+              <h4 style={{display: 'inline'}}>Timestamp: </h4>{(timeStamp.timestamp / 60 | 0) + ':' + String(timeStamp.timestamp % 60).padStart(2, '0')}
             </div>
             <div style={{display: 'block'}}>
-              Student: {timeStamp.name}
+               <h4 style={{display: 'inline'}}>Student: </h4>{timeStamp.name}
             </div>
             <div style={{display: 'block'}}>
-              Comment: {timeStamp.comment}
+            <h4 style={{display: 'inline'}}>Comment: </h4>{timeStamp.comment}
             </div>
           </div>
         </Paper>
