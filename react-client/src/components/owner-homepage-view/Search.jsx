@@ -9,13 +9,19 @@ class Search extends React.Component {
     this.state = {
       userInput: ''
     }
-    this.updateInput = this.updateInput.bind(this)
+    this.updateInput = this.updateInput.bind(this);
+    this.onNewRequest = this.onNewRequest.bind(this);
   }
 
-  updateInput(event) {
+  updateInput(input) {
     this.setState({
-      userInput: event.target.value
-    })
+      userInput: input
+    }); 
+  }
+
+  onNewRequest(input) {
+    this.props.getVideos(input);
+    this.refs['autocomplete'].setState({searchText:''});
   }
 
   render() {
@@ -34,20 +40,24 @@ class Search extends React.Component {
     }
     return (
       <Paper style={style} zDepth={1}>
-      <div id="owner-homepage-search-bar">
-        <AutoComplete 
-          dataSource={[]} 
-          value={this.state.userInput} 
-          type="text"
-          onUpdateInput={this.updateInput}
-        />
-        <RaisedButton 
-          label="Search" 
-          value="search"
-          onClick={() => this.props.getVideos(this.state.userInput)} 
-        />
+        <div id="owner-homepage-search-bar">
+          <AutoComplete 
+            dataSource={[]} 
+            type="text"
+            ref={'autocomplete'}
+            onUpdateInput={this.updateInput}
+            onNewRequest={this.onNewRequest}
+          />
+          <RaisedButton 
+            label="Search" 
+            value="search"
+            onClick={() => {
+              this.props.getVideos(this.state.userInput);
+              this.refs['autocomplete'].setState({searchText:''});
+            }} 
+          />
 
-      </div>
+        </div>
       </Paper>
     )
   }

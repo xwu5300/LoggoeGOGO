@@ -23,14 +23,14 @@ class TimestampListEntry extends React.Component {
     return (
       <Paper style={{width: '80%', margin: '10px', padding: '20px', display: 'inline-block', float: 'left'}}>
         <div style={{float: 'left'}}>
-          Timestamp: {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
+        <h4 style={{display: 'inline'}}>Timestamp: </h4> {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
         </div>
         <div style={{float: 'left'}}>
-          Comment: {this.props.timestamp.comment}
+        <h4 style={{display: 'inline'}}>Comment: </h4> {this.props.timestamp.comment}
         </div>
         <div style={{float: 'left'}}>
           <button onClick={this.onChangeVideo}>Watch This Clip</button>
-          <button onClick={this.onDeleteTimestamp}>Delete</button>
+          <button onClick={this.onDeleteTimestamp}>X</button>
         </div>
       </Paper>
       );

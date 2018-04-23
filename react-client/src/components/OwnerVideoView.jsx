@@ -65,16 +65,6 @@ class OwnerVideo extends React.Component {
         </div>  
       </div>  
       </Paper>
-
-
-      // <div id="owner-video-view">
-      //   Owner Videos
-      //   <div>
-      //     <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>
-      //     {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
-      //     {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
-      //   </div>  
-      // </div>  
     )
   }
 }

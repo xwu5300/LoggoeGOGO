@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import YouTube from 'react-youtube';
 import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class VideoPlayer extends React.Component {
   }
 
 
-  handleChange(event) {
-    this.setState({comment: event.target.value});
+  handleChange(comment) {
+    this.setState({comment:comment});
   }
 
 
@@ -34,14 +35,11 @@ class VideoPlayer extends React.Component {
   
   onPlayVideo() {
     this.state.player.playVideo();
-    console.log(this.state.player.getVideoData())
   }
 
   onPauseVideo() {
     this.state.player.pauseVideo();
   }
-
-
 
   saveTimeStamp() {
     const timestamp = Math.floor(this.state.player.getCurrentTime());
@@ -73,11 +71,15 @@ class VideoPlayer extends React.Component {
             <RaisedButton onClick={this.onPlayVideo} label="Play" style={{margin: '5px'}}/>
             <RaisedButton onClick={this.onPauseVideo} label="Pause" style={{margin: '5px'}}/>
             {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
-            <RaisedButton onClick={this.saveTimeStamp} label="Confused" style={{margin: '5px'}} />
           </div>
           <label>
-            Comment:
-            <input type="text" value={this.state.comment} onChange={this.handleChange} />
+            <h4 style={{display: 'inline'}}>Comment: </h4>
+            <AutoComplete 
+              dataSource={[]} 
+              refs={'autocomplete'}
+              onUpdateInput={this.handleChange}
+              onNewRequest={this.saveTimeStamp}/>
+            <RaisedButton onClick={this.saveTimeStamp} label="Confused" style={{margin: '5px'}} />
           </label>
         </div>
       </div>

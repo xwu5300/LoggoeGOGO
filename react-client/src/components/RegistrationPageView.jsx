@@ -83,7 +83,12 @@ class Registration extends React.Component {
 
     const inputStyle = {
       width:'100%',
-      display: 'inline-block'
+      margin: 20,
+      display: 'inline-block',
+      position: 'relative',
+      left: '50%',
+      transform: 'translate(-28%, 0%)'
+
     };
 
     //make perfect center somehow
