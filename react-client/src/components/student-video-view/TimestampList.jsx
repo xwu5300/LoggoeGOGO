@@ -12,7 +12,6 @@ class TimestampList extends React.Component {
   }
   
   render() {
-    console.log('timestamp list', this.props.timestamps)
     return (
       <div>
         <div>
@@ -27,7 +26,6 @@ class TimestampList extends React.Component {
       </div>
     );
   }
-
 }
 
 export default TimestampList;

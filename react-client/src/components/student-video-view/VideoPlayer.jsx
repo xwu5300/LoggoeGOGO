@@ -14,6 +14,7 @@ class VideoPlayer extends React.Component {
       player: null,
       comment: ''
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
@@ -21,11 +22,9 @@ class VideoPlayer extends React.Component {
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
   }
 
-
   handleChange(comment) {
     this.setState({comment:comment});
   }
-
 
   onReady(event) {
     this.setState({
@@ -50,7 +49,7 @@ class VideoPlayer extends React.Component {
     const opts = {
       height: '390',
       width: '500',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
+      playerVars: {
         autoplay: 1,
         start: this.props.startingTimestamp,
       }
@@ -68,9 +67,14 @@ class VideoPlayer extends React.Component {
         <br/>
         <div>
           <div>
-            <RaisedButton onClick={this.onPlayVideo} label="Play" style={{margin: '5px'}}/>
-            <RaisedButton onClick={this.onPauseVideo} label="Pause" style={{margin: '5px'}}/>
-            {/* <button onClick={this.onChangeVideo}>Change Video</button> */}
+            <RaisedButton 
+              onClick={this.onPlayVideo} 
+              label="Play" 
+              style={{margin: '5px'}}/>
+            <RaisedButton 
+              onClick={this.onPauseVideo} 
+              label="Pause" 
+              style={{margin: '5px'}}/>
           </div>
           <label>
             <h4 style={{display: 'inline'}}>Comment: </h4>
@@ -79,7 +83,10 @@ class VideoPlayer extends React.Component {
               refs={'autocomplete'}
               onUpdateInput={this.handleChange}
               onNewRequest={this.saveTimeStamp}/>
-            <RaisedButton onClick={this.saveTimeStamp} label="Confused" style={{margin: '5px'}} />
+            <RaisedButton 
+              onClick={this.saveTimeStamp} 
+              label="Confused" 
+              style={{margin: '5px'}} />
           </label>
         </div>
       </div>

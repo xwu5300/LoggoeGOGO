@@ -8,7 +8,6 @@ class TimestampListEntry extends React.Component {
     
     this.onDeleteTimestamp = this.onDeleteTimestamp.bind(this)
     this.onChangeVideo = this.onChangeVideo.bind(this)
-
   }
 
   onChangeVideo() {
@@ -21,21 +20,29 @@ class TimestampListEntry extends React.Component {
   
   render() {
     return (
-      <Paper style={{width: '80%', margin: '10px', padding: '20px', display: 'inline-block', float: 'left'}}>
-        <div style={{float: 'left'}}>
-        <h4 style={{display: 'inline'}}>Timestamp: </h4> {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
+      <Paper style={style}>
+        <div>
+          <h4 style={{display: 'inline'}}>Timestamp: </h4> 
+          {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
         </div>
-        <div style={{float: 'left'}}>
-        <h4 style={{display: 'inline'}}>Comment: </h4> {this.props.timestamp.comment}
+        <div>
+          <h4 style={{display: 'inline'}}>Comment: </h4> 
+          {this.props.timestamp.comment}
         </div>
-        <div style={{float: 'left'}}>
+        <div>
           <button onClick={this.onChangeVideo}>Watch This Clip</button>
           <button onClick={this.onDeleteTimestamp}>X</button>
         </div>
       </Paper>
       );
   }
+}
 
+const style = {
+  width: '80%', 
+  margin: '10px', 
+  padding: '20px', 
+  float: 'left'
 }
 
 export default TimestampListEntry;

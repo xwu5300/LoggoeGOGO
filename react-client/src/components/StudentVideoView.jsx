@@ -15,6 +15,7 @@ class StudentVideo extends React.Component {
       startingTimestamp: 0,
       userId: ''
     }
+
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
     this.deleteTimestamp = this.deleteTimestamp.bind(this);
@@ -22,27 +23,26 @@ class StudentVideo extends React.Component {
   }
 
   componentDidMount(){
-    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
-    this.getUserId(this.props.location.username);
-    
+    const videoId = this.props.location.videoId;
+    this.getUserId(this.props.location.username); 
   }
+
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
          .then((data) => {
-           this.setState({
-             userId: data.data[0].id
-           })
+           this.setState({userId: data.data[0].id})
            this.getAllTimestamps();
          })
   }
+
   saveTimeStamp(timestamp, comment) {
-    const user = this.state.userId || 1
-    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
-    //save to database
+    const user = this.state.userId;
+    const videoId = this.props.location.videoId;
+
     axios.post('/timestamps', {
       params: {
         userId: user,
-        videoId: this.props.location.videoId || videoId,
+        videoId: this.props.location.videoId,
         timestamp: timestamp,
         comment: comment
       }
@@ -51,12 +51,13 @@ class StudentVideo extends React.Component {
   }
 
   deleteTimestamp(timestamp) {
-    const user = this.state.userId || 1;
-    const videoId = this.props.location.videoId || 'fju9ii8YsGs';
+    const user = this.state.userId;
+    const videoId = this.props.location.videoId;
+
     axios.delete('/timestamps', {
       params: {
         userId: user,
-        videoId: this.props.location.videoId || videoId,
+        videoId: this.props.location.videoId,
         timestamp: timestamp
       }
     })
@@ -64,62 +65,74 @@ class StudentVideo extends React.Component {
     .then(this.setState({startingTimestamp: this.state.timestamps[0]})) 
   }
 
-  //gets videoId as a prop
   getAllTimestamps() {
-    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
+    const videoId = this.props.location.videoId;
+    
     axios.get('/timestamps', {
       params: {
-        videoId: this.props.location.videoId || videoId,
+        videoId: this.props.location.videoId,
         userId: this.state.userId
       }
     })
-    .then((data) => (data.data.map((TS) => {
-      return TS})))
-    .then((TS) => {
-        this.setState({timestamps: TS})
+    .then((data) => (data.data.map((TS) => TS)))
+    .then((TS) => {this.setState({timestamps: TS})
     })
   }
-
+  
   changeVideo(timestamp) {
     this.setState({startingTimestamp: timestamp})
   }
-
+  
   render() {    
-    const videoId = this.props.location.videoId || 'fju9ii8YsGs'
-
-    const style = {
-      height: '100%',
-      width: '100%',
-      margin: '30px',
-      textAlign: 'center',
-      display: 'inline-block',
-      padding: '30px',
-      background: '#D8E4EA',
-    }
-
     return (
       <Paper style={style} zDepth={1}>
-      <div>
         <div>
-        <Paper style={{margin: '20px', padding: '20px', width: '60%', float: 'left'}}>
-          <VideoPlayer 
-            videoId={videoId} 
-            startingTimestamp={this.state.startingTimestamp}
-            saveTimeStamp={this.saveTimeStamp}/>
-        </Paper>
+          <div>
+            <Paper style={paperStyle1}>
+              <VideoPlayer 
+                videoId={this.props.location.videoId} 
+                startingTimestamp={this.state.startingTimestamp}
+                saveTimeStamp={this.saveTimeStamp}/>
+            </Paper>
+          </div>
+          <div>
+            <Paper style={paperStyle2}>
+              <TimestampList 
+                timestamps={this.state.timestamps} 
+                deleteTimestamp={this.deleteTimestamp}
+                changeVideo={this.changeVideo}/>
+            </Paper>
+          </div>
         </div>
-        <div>
-        <Paper style={{margin: '20px', padding: '20px', width: '30%', float: 'left'}}>
-          <TimestampList 
-            timestamps={this.state.timestamps} 
-            deleteTimestamp={this.deleteTimestamp}
-            changeVideo={this.changeVideo}/>
-        </Paper>
-        </div>
-      </div>
       </Paper>
     )
   }
 }
+
+
+const style = {
+  height: '100%',
+  width: '100%',
+  margin: '30px',
+  textAlign: 'center',
+  display: 'inline-block',
+  padding: '30px',
+  background: '#D8E4EA',
+}
+
+const paperStyle1 = {
+  margin: '20px', 
+  padding: '20px', 
+  width: '60%', 
+  float: 'left',
+}
+
+const paperStyle2 = {
+  margin: '20px', 
+  padding: '20px', 
+  width: '30%', 
+  float: 'left',
+}
+
 
 export default StudentVideo;
