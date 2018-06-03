@@ -1,6 +1,6 @@
-# Loggoe GOGO
+# VoLo
 
-> Loggoe GoGo allows students to view videos posted by owners and record specific timestamps with comments to mark down areas of "confusion." The owners will be able to watch snippets of the video marked by students and see the comments associated with those snippets. A histogram with buckets grouping the number of student confusions will indicate which period in the video confusion generally occurs. 
+> VoLo allows students to view videos posted by owners and record specific timestamps with comments to mark down areas of "confusion." The owners will be able to watch snippets of the video marked by students and see the comments associated with those snippets. A histogram with buckets grouping the number of student confusions will indicate which period in the video confusion generally occurs. 
 
 ## Team
 
