@@ -57,7 +57,7 @@ class LandingPage extends React.Component {
     return (
       <Paper style={paperStyle} zDepth={1}>
 
-          <h3> VoLo </h3>
+          <h3> Volo </h3>
 
           <AutoComplete 
             dataSource={[]} 
