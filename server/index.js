@@ -18,7 +18,6 @@ const {
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
-const api = require('../config.js').API;
 
 const app = express();
 
@@ -79,6 +78,7 @@ app.get('/student/homepage', (req, res) =>
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/search', (req, res) => {
+  const api = process.env.API;
   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
     (video) => {
       let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
