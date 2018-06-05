@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-  host     : process.env.DBhost || 'localhost',
-  user     : process.env.DBuser || 'root',
-  password : process.env.DBpassword || '',
+  host     : process.env.DB_HOST || 'localhost',
+  user     : process.env.DB_USER || 'root',
+  password : process.env.DB_PASSWORD || '',
   database : 'volo'
 });
 
