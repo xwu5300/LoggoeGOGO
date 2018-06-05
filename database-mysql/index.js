@@ -7,6 +7,15 @@ const connection = mysql.createConnection({
   database : 'volo'
 });
 
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+ 
+  console.log('connected as id ' + connection.threadId);
+});
+
 //---------------------------------------------------------USER QUERIES
 //-------------------------------------------- GET REQUESTS
 const getUser = (user, callback) => {
