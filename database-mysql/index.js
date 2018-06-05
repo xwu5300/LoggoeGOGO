@@ -1,8 +1,10 @@
-const mysql = require('mysql');
+import mysql from 'mysql';
+
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  database : 'oneTeam'
+  host     : process.env.DBhost || 'localhost',
+  user     : process.env.DBuser || 'root',
+  password : process.env.DBpassword || '',
+  database : 'volo'
 });
 
 //---------------------------------------------------------USER QUERIES

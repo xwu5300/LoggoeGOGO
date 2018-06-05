@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS oneTeam;
-CREATE DATABASE oneTeam;
-USE oneTeam;
+USE volo;
 CREATE TABLE timeStamps (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   videoId varchar(255) NOT NULL,
